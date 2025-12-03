@@ -3,13 +3,26 @@ description: Build React + Tailwind components from copy.yaml and design.json
 argument-hint: [--output=path]
 ---
 
-Build production-grade React components using Claude Code.
+<objective>
+Build production-grade React components using Claude Code by invoking the frontend-builder subagent.
+</objective>
 
-**Arguments received:** $ARGUMENTS
+<instructions>
+Invoke the `frontend-builder` subagent to build the frontend.
 
-**Task:** Use the frontend-builder agent to:
-1. Check if Vite project exists (look for package.json with vite dependency)
-2. If no project exists, scaffold new Vite + React + Tailwind + shadcn/ui
-3. Locate copy.yaml and design.json in ./prompts/*/
-4. Generate components applying design tokens and frontend-design principles
-5. Use --output if provided, otherwise use ./src/components/
+Arguments received: $ARGUMENTS
+
+The frontend-builder will:
+1. Check if Vite project exists
+2. Scaffold new project if needed (Vite + React + Tailwind + shadcn/ui)
+3. Locate copy.yaml and design.json
+4. Generate components applying the frontend-design skill
+
+Wait for the agent to complete and inform the user of the result.
+</instructions>
+
+<error_handling>
+- **No copy.yaml found**: "Run /extract-copy first to create content structure."
+- **No design.json found**: "Run /extract-design first to extract design tokens."
+- **Scaffold failed**: Check pnpm is installed and available.
+</error_handling>
