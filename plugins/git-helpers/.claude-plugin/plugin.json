@@ -3,5 +3,7 @@
   "version": "1.0.0",
   "description": "Git workflow helper commands",
   "commands": ["./commands/commit.md", "./commands/pr-description.md", "./commands/code-review.md"],
-  "agents": "./agents/"
+  "agents": [
+    "./agents/code-reviewer.md"
+  ]
 }
