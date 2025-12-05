@@ -2,14 +2,30 @@
 
 Git workflow helper commands for Claude Code.
 
+## Installation
+
+```bash
+/plugin install git-helpers
+```
+
 ## Commands
 
 | Command | Description |
 |---------|-------------|
+| `/code-review` | Review code changes for issues |
 | `/commit` | Create commits with well-formatted messages |
 | `/commit -s` | Commit only staged files |
-| `/pr-description` | Generate PR title and description |
-| `/code-review` | Review code changes for issues |
+| `/details` | Generate PR title and description to file |
+| `/create-pr` | Create PR with generated details |
+
+## Workflow
+
+```
+/code-review (optional) --> /commit --> /details --> /create-pr
+         |                      |           |            |
+         v                      v           v            v
+CODE_REVIEW.md              commit    PR_DETAILS.md  PR created
+```
 
 ## Agents
 
@@ -17,13 +33,18 @@ Git workflow helper commands for Claude Code.
 |-------|-------------|
 | `code-reviewer` | Senior code reviewer for quality analysis |
 
-## Installation
+## Usage
+
+### /code-review
+
+Review code changes using the `code-reviewer` agent.
 
 ```bash
-/plugin install git-helpers
+/code-review          # Auto-detect base branch
+/code-review main     # Use main as base
 ```
 
-## Usage
+**Output:** `CODE_REVIEW.md` with issues, suggestions, and summary.
 
 ### /commit
 
@@ -38,29 +59,29 @@ Create a commit with an auto-generated message based on the actual diff.
 
 **Types:** `feat`, `fix`, `refactor`, `chore`, `docs`, `test`
 
-### /pr-description
+### /details
 
-Generate PR title and description comparing current branch to base.
-
-```bash
-/pr-description          # Auto-detect base branch
-/pr-description main     # Use main as base
-```
-
-**Output:**
-- If `gh` cli available: creates PR directly
-- Otherwise: saves to `PR_DETAILS.md`
-
-### /code-review
-
-Review code changes using the `code-reviewer` agent.
+Generate PR title and description and save to file.
 
 ```bash
-/code-review          # Auto-detect base branch
-/code-review main     # Use main as base
+/details          # Auto-detect base branch
+/details main     # Use main as base
 ```
 
-**Output:** `CODE_REVIEW.md` with issues, suggestions, and summary.
+**Output:** `PR_DETAILS.md`
+
+### /create-pr
+
+Generate PR details and create the Pull Request directly.
+
+```bash
+/create-pr          # Auto-detect base branch
+/create-pr main     # Use main as base
+```
+
+**Requires:** `gh` cli installed and authenticated.
+
+**Output:** PR created, returns PR URL.
 
 ## Key Principles
 

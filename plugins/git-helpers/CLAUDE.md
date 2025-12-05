@@ -2,7 +2,32 @@
 
 Git workflow helper commands for Claude Code.
 
+## Workflow
+
+```
+/code-review (optional) --> /commit --> /details --> /create-pr
+         |                      |           |            |
+         v                      v           v            v
+   CODE_REVIEW.md            commit    PR_DETAILS.md  PR created
+```
+
 ## Commands
+
+### /code-review
+
+Review code changes using the `code-reviewer` agent.
+
+**Usage:**
+```bash
+/code-review          # Auto-detect base branch
+/code-review main     # Use main as base
+```
+
+**Output:** `CODE_REVIEW.md`
+
+**Key behavior:**
+- Analyzes the actual diff, not conversation context
+- Focus: bugs, security, performance, maintainability
 
 ### /commit
 
@@ -20,35 +45,39 @@ Create commits with well-formatted messages based on actual file changes.
 - Analyzes the actual diff, not conversation context
 - Handles pre-commit hooks with automatic amend
 
-### /pr-description
+### /details
 
-Generate PR title and description based on branch changes.
+Generate PR title and description and save to file.
 
 **Usage:**
 ```bash
-/pr-description          # Auto-detect base branch
-/pr-description main     # Use main as base
+/details          # Auto-detect base branch
+/details main     # Use main as base
 ```
 
-**Output:**
-- If `gh` cli available: creates PR directly
-- Otherwise: saves to `PR_DETAILS.md`
+**Output:** `PR_DETAILS.md`
 
 **Key behavior:**
 - Analyzes commits and diff, not conversation context
 - Simple format: title + summary + changes list
 
-### /code-review
+### /create-pr
 
-Review code changes using the `code-reviewer` agent.
+Generate PR details and create the Pull Request directly.
 
 **Usage:**
 ```bash
-/code-review          # Auto-detect base branch
-/code-review main     # Use main as base
+/create-pr          # Auto-detect base branch
+/create-pr main     # Use main as base
 ```
 
-**Output:** `CODE_REVIEW.md`
+**Requires:** `gh` cli
+
+**Output:** PR created, returns PR URL
+
+**Key behavior:**
+- Analyzes commits and diff, not conversation context
+- Creates PR via `gh pr create`
 
 ## Agents
 

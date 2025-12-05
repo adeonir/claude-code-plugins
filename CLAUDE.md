@@ -22,7 +22,7 @@ plugins/
 ├── git-helpers/              # Git workflow plugin
 │   ├── .claude-plugin/plugin.json
 │   ├── agents/               # Subagents (code-reviewer)
-│   └── commands/             # Slash commands (/commit, /pr-description, /code-review)
+│   └── commands/             # Slash commands (/code-review, /commit, /details, /create-pr)
 │
 └── spec-driven/              # Specification-driven workflow
     ├── .claude-plugin/plugin.json
@@ -51,6 +51,8 @@ Then choose: `/build-frontend` (Claude Code builds it) or `/generate-prompt` (fo
 Outputs go to `./prompts/` directory.
 
 ### git-helpers
+Workflow: `/code-review` -> `/commit` -> `/details` -> `/create-pr`
+
 Commands analyze actual git diffs, not conversation context. Commit message format: `type: concise description` where type is one of: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`.
 
 ### spec-driven
