@@ -68,3 +68,7 @@ Review code changes using the `code-reviewer` agent.
 - Messages reflect current implementation state
 - Concise, actionable output
 - No unnecessary sections or verbose templates
+
+## License
+
+MIT

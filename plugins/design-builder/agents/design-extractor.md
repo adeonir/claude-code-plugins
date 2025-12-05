@@ -2,6 +2,7 @@
 name: design-extractor
 description: Creative Director that extracts design tokens from reference images. Use to generate design.json with colors, typography, and components.
 tools: AskUserQuestion, Glob, Read, WebFetch, Write
+color: blue
 ---
 
 # Design Extractor Agent

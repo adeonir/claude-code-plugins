@@ -2,6 +2,7 @@
 name: frontend-builder
 description: Frontend Engineer that builds production-grade components from design tokens. Use to generate frontend code directly with Claude Code.
 tools: AskUserQuestion, Bash, Edit, Glob, Read, Write
+color: green
 ---
 
 # Frontend Builder Agent

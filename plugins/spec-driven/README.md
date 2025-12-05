@@ -85,3 +85,7 @@ Tasks use markers to indicate parallelization:
 spec.md   spec.md      plan.md   tasks.md   code +         summary
           (updated)                         tasks.md
 ```
+
+## License
+
+MIT

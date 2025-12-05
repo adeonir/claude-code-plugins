@@ -2,6 +2,7 @@
 name: prompt-generator
 description: Prompt Engineer that generates platform-specific prompts from design tokens. Use to generate prompts for Replit, v0, Lovable, or Figma.
 tools: AskUserQuestion, Glob, Read, Write
+color: cyan
 ---
 
 # Prompt Generator Agent

@@ -2,6 +2,7 @@
 name: copy-extractor
 description: Content Strategist that extracts structured content from URLs. Use to generate copy.yaml with navigation and sections.
 tools: AskUserQuestion, Glob, Read, WebFetch, Write
+color: purple
 ---
 
 # Copy Extractor Agent

@@ -47,3 +47,7 @@ Add this marketplace to Claude Code:
 1. Fork this repository
 2. Add your plugin under `plugins/`
 3. Submit a pull request
+
+## License
+
+MIT
