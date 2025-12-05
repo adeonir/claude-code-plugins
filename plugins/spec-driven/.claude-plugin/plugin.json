@@ -1,0 +1,26 @@
+{
+  "name": "spec-driven",
+  "version": "1.0.0",
+  "description": "Specification-driven development workflow with persistent artifacts for planning, task management, and implementation",
+  "author": {
+    "name": "Adeonir Kohl"
+  },
+  "repository": "https://github.com/adeonir/claude-code-plugins",
+  "license": "MIT",
+  "keywords": ["spec", "specification", "planning", "tasks", "implementation", "workflow"],
+  "commands": [
+    "./commands/spec.md",
+    "./commands/clarify.md",
+    "./commands/plan.md",
+    "./commands/tasks.md",
+    "./commands/implement.md",
+    "./commands/review.md"
+  ],
+  "agents": [
+    "./agents/code-explorer.md",
+    "./agents/code-architect.md",
+    "./agents/task-generator.md",
+    "./agents/implement-agent.md",
+    "./agents/code-reviewer.md"
+  ]
+}

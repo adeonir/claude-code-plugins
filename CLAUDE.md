@@ -19,10 +19,16 @@ plugins/
 │   ├── commands/             # Slash commands (/extract-copy, /extract-design, etc.)
 │   └── skills/               # Auto-loaded skills (frontend-design)
 │
-└── git-helpers/              # Git workflow plugin
+├── git-helpers/              # Git workflow plugin
+│   ├── .claude-plugin/plugin.json
+│   ├── agents/               # Subagents (code-reviewer)
+│   └── commands/             # Slash commands (/commit, /pr-description, /code-review)
+│
+└── spec-driven/              # Specification-driven workflow
     ├── .claude-plugin/plugin.json
-    ├── agents/               # Subagents (code-reviewer)
-    └── commands/             # Slash commands (/commit, /pr-description, /code-review)
+    ├── agents/               # Subagents (code-explorer, code-architect, etc.)
+    ├── commands/             # Slash commands (/spec, /plan, /tasks, etc.)
+    └── templates/            # Artifact templates
 ```
 
 ## Plugin Structure
@@ -46,6 +52,12 @@ Outputs go to `./prompts/` directory.
 
 ### git-helpers
 Commands analyze actual git diffs, not conversation context. Commit message format: `type: concise description` where type is one of: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`.
+
+### spec-driven
+Specification-driven development workflow:
+`/spec` -> `/clarify` -> `/plan` -> `/tasks` -> `/implement` -> `/review`
+
+Artifacts persisted in `.specs/{branch}/` (spec.md, plan.md, tasks.md).
 
 ## Writing New Plugins
 
