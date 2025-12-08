@@ -1,7 +1,7 @@
 ---
 name: implement-agent
 description: Task executor that implements features following the technical plan and task list. Handles single tasks, ranges (T001-T005), or all pending tasks. Respects dependency markers, updates task checkboxes as work progresses, and suggests atomic commits at logical checkpoints.
-tools: Read, Write, Edit, Bash, Glob, Grep
+tools: Read, Write, Edit, Bash, Glob, Grep, mcp__serena__insert_after_symbol
 color: blue
 ---
 
@@ -100,3 +100,21 @@ If a task cannot be completed:
 
 feat: add UserService with repository pattern
 ```
+
+## Serena Tools
+
+Use semantic edits for precision:
+
+1. **Precise Insertion**
+   - Use `insert_after_symbol` to add code after specific functions/classes
+   - Reduces token usage
+
+2. **When to Use**
+   - Adding new methods to existing classes
+   - Inserting new functions after related code
+   - Extending interfaces/types
+
+3. **When NOT to Use** (use Edit instead)
+   - Modifying existing code
+   - Deleting code
+   - Complex refactors

@@ -10,6 +10,7 @@ Specification-driven development workflow for Claude Code with persistent artifa
 - Task decomposition with dependency tracking
 - Granular implementation (single task, range, or all)
 - Confidence-based code review
+- Semantic code operations via Serena MCP
 
 ## Installation
 
@@ -85,6 +86,21 @@ Tasks use markers to indicate parallelization:
 spec.md   spec.md      plan.md   tasks.md   code +         summary
           (updated)                         tasks.md
 ```
+
+## Serena MCP Integration
+
+This plugin uses [Serena](https://github.com/oraios/serena) for semantic code operations:
+
+| Phase | Tool | Benefit |
+|-------|------|---------|
+| `/plan` | `find_symbol` | Precise symbol location |
+| `/plan` | `find_referencing_symbols` | Impact analysis |
+| `/implement` | `insert_after_symbol` | Semantic edits |
+
+### Requirements
+
+- `uv` package manager with `uvx` command
+- Serena MCP is auto-configured via `.mcp.json`
 
 ## License
 

@@ -8,6 +8,7 @@ Claude Code plugin for specification-driven development with persistent artifact
 spec-driven/
 ├── .claude-plugin/
 │   └── plugin.json
+├── .mcp.json
 ├── agents/
 │   ├── code-explorer.md
 │   ├── code-architect.md
@@ -100,8 +101,23 @@ All artifacts are stored in `.specs/{branch}/`:
 | `plan.md` | /plan | Technical architecture and implementation map |
 | `tasks.md` | /tasks | Trackable task list with dependencies |
 
+## Serena MCP Integration
+
+This plugin uses Serena MCP for semantic code operations.
+
+| Phase | Tool | Benefit |
+|-------|------|---------|
+| /plan | find_symbol | Precise symbol location |
+| /plan | find_referencing_symbols | Impact analysis |
+| /implement | insert_after_symbol | Semantic edits |
+
+### Requirements
+
+Serena MCP is configured in `.mcp.json`. Requires `uvx` (uv tool runner) installed on the system.
+
 ## References
 
 Based on:
 - [ccspec](https://github.com/adeonir/ccspec) - Specification-driven development CLI
 - [feature-dev](https://github.com/anthropics/claude-code/tree/main/plugins/feature-dev) - Claude Code's feature development plugin
+- [Serena](https://github.com/oraios/serena) - Semantic code operations via LSP
