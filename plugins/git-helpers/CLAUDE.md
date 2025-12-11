@@ -47,19 +47,21 @@ Create commits with well-formatted messages based on actual file changes.
 
 ### /details
 
-Generate PR title and description and save to file.
+Generate comprehensive PR description with structured analysis.
 
 **Usage:**
 ```bash
-/details          # Auto-detect base branch
-/details main     # Use main as base
+/details              # Auto-detect base branch
+/details development  # Use development as base
 ```
 
 **Output:** `PR_DETAILS.md`
 
 **Key behavior:**
 - Analyzes commits and diff, not conversation context
-- Simple format: title + summary + changes list
+- Categorizes files: Core, API, State, UI, Config, Docs
+- Includes Technical Flow, Impact Assessment, Priority Review Areas
+- Provides Testing Instructions
 
 ### /create-pr
 
