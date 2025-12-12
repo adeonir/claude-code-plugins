@@ -3,14 +3,20 @@ description: Extract structured content from URLs
 argument-hint: <url> [--type=landing|website|webapp|app]
 ---
 
-<objective>
-Extract structured content from a URL and generate a copy.yaml file by invoking the copy-extractor subagent.
-</objective>
+# Extract Copy Command
 
-<instructions>
-Invoke the `copy-extractor` subagent to extract content from the provided URL.
+Extract structured content from a URL and generate a copy.yaml file.
+
+## Arguments
+
+- `<url>` - URL to extract content from
+- `--type` - Project type (landing, website, webapp, app)
 
 Arguments received: $ARGUMENTS
+
+## Process
+
+Invoke the `copy-extractor` subagent to extract content from the provided URL.
 
 The copy-extractor will:
 1. Fetch and analyze the URL
@@ -18,9 +24,8 @@ The copy-extractor will:
 3. Generate copy.yaml in ./prompts/
 
 Wait for the agent to complete and inform the user of the result.
-</instructions>
 
-<error_handling>
-- **URL not accessible**: Ask user to paste a screenshot instead.
-- **Project type unclear**: Ask user to specify --type.
-</error_handling>
+## Error Handling
+
+- **URL not accessible**: Ask user to paste a screenshot instead
+- **Project type unclear**: Ask user to specify --type

@@ -3,16 +3,20 @@ description: Create feature specification from description or PRD
 argument-hint: <description> | @<file.md>
 ---
 
-<objective>
-Transform a feature description or PRD into a structured specification file (spec.md).
-</objective>
+# Spec Command
 
-<instructions>
-Create a feature specification based on the provided input.
+Transform a feature description or PRD into a structured specification file.
+
+## Arguments
+
+- `<description>` - Text describing the feature
+- `@<file.md>` - Path to PRD file to use as context
 
 Arguments received: $ARGUMENTS
 
-## Step 1: Confirm Branch
+## Process
+
+### Step 1: Confirm Branch
 
 Get the current git branch:
 ```bash
@@ -23,7 +27,7 @@ Show the branch to the user and ask if they want to:
 - Continue on this branch
 - Create/switch to a new branch
 
-## Step 2: Process Input
+### Step 2: Process Input
 
 If input is a file reference (@file.md):
 - Read the file content as PRD context
@@ -34,7 +38,7 @@ If input is text:
 If input is empty:
 - Ask the user for a feature description
 
-## Step 3: Generate Specification
+### Step 3: Generate Specification
 
 Create `.specs/{branch}/spec.md` using the template from `templates/spec.md`:
 
@@ -45,23 +49,22 @@ Extract from the input:
 - **Functional Requirements**: Specific capabilities (FR-001, FR-002...)
 - **Acceptance Criteria**: Testable conditions (AC-001, AC-002...)
 
-## Step 4: Mark Ambiguities
+### Step 4: Mark Ambiguities
 
 For any unclear or underspecified items, add:
 ```
 [NEEDS CLARIFICATION: specific question]
 ```
 
-## Step 5: Report
+### Step 5: Report
 
 Inform the user:
 - Spec file created at `.specs/{branch}/spec.md`
 - Number of items needing clarification (if any)
 - Next step: `/clarify` to resolve ambiguities, or `/plan` if none
-</instructions>
 
-<error_handling>
+## Error Handling
+
 - **No input provided**: Ask user for feature description
 - **File not found**: Inform user and ask for correct path
 - **Branch issue**: Suggest creating a new branch for the feature
-</error_handling>

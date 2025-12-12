@@ -3,14 +3,13 @@ description: Generate task list from technical plan
 argument-hint: (none)
 ---
 
-<objective>
+# Tasks Command
+
 Transform the technical plan into an organized, trackable task list.
-</objective>
 
-<instructions>
-Generate a task list from the technical plan.
+## Process
 
-## Step 1: Load Plan
+### Step 1: Load Plan
 
 Get current branch:
 ```bash
@@ -21,7 +20,7 @@ Read `.specs/{branch}/plan.md`
 
 If file doesn't exist, inform user to run `/plan` first.
 
-## Step 2: Generate Tasks
+### Step 2: Generate Tasks
 
 Invoke the `task-generator` agent with:
 - The technical plan
@@ -33,7 +32,7 @@ The agent will create `.specs/{branch}/tasks.md` with:
 - Categories (Setup, Core, Testing, Polish)
 - Checkboxes for tracking
 
-## Step 3: Report
+### Step 3: Report
 
 Inform the user:
 - Tasks created at `.specs/{branch}/tasks.md`
@@ -52,9 +51,8 @@ Show a summary table:
 
 Run `/implement` to start, or `/implement T001` for a specific task.
 ```
-</instructions>
 
-<error_handling>
+## Error Handling
+
 - **Plan not found**: Inform user to run `/plan` first
 - **Plan incomplete**: Point out missing sections, suggest updating plan
-</error_handling>

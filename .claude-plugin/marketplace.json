@@ -9,7 +9,7 @@
       "name": "spec-driven",
       "source": "./plugins/spec-driven",
       "description": "Specification-driven development workflow with persistent artifacts for planning, task management, and implementation",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "keywords": ["spec", "specification", "planning", "tasks", "implementation", "workflow"]
     },
     {
@@ -23,7 +23,7 @@
       "name": "design-builder",
       "source": "./plugins/design-builder",
       "description": "Extract copy and design from references to build frontend components or generate prompts for AI tools. Supports design variations for visual exploration.",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "keywords": ["design", "frontend", "components", "prompt", "ai-tools", "variations"]
     },
     {

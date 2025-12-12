@@ -3,16 +3,24 @@ description: Execute implementation tasks
 argument-hint: [T001 | T001-T005 | --all]
 ---
 
-<objective>
-Execute tasks from the task list, respecting dependencies and updating progress.
-</objective>
+# Implement Command
 
-<instructions>
-Execute implementation tasks based on the provided scope.
+Execute tasks from the task list, respecting dependencies and updating progress.
+
+## Arguments
+
+| Input | Action |
+|-------|--------|
+| (empty) | Next pending task |
+| `T001` | Single task |
+| `T001-T005` | Range of tasks |
+| `--all` | All pending tasks |
 
 Arguments received: $ARGUMENTS
 
-## Step 1: Load Context
+## Process
+
+### Step 1: Load Context
 
 Get current branch:
 ```bash
@@ -25,25 +33,18 @@ Read:
 
 If files don't exist, inform user to run `/plan` and `/tasks` first.
 
-## Step 2: Parse Scope
+### Step 2: Parse Scope
 
-Determine which tasks to execute:
+Determine which tasks to execute based on arguments.
 
-| Input | Action |
-|-------|--------|
-| (empty) | Next pending task |
-| `T001` | Single task |
-| `T001-T005` | Range of tasks |
-| `--all` | All pending tasks |
-
-## Step 3: Validate Dependencies
+### Step 3: Validate Dependencies
 
 For each task to execute:
 - If marked `[P]`, can proceed
 - If marked `[B:Txxx]`, check if Txxx is completed
 - Skip blocked tasks, inform user
 
-## Step 4: Execute Tasks
+### Step 4: Execute Tasks
 
 Invoke the `implement-agent` with:
 - Task scope
@@ -55,7 +56,7 @@ The agent will:
 - Update tasks.md with checkboxes
 - Suggest atomic commits
 
-## Step 5: Report
+### Step 5: Report
 
 After execution:
 - Show tasks completed
@@ -63,10 +64,9 @@ After execution:
 - Show remaining tasks
 - Suggest commit message
 - Next steps: continue with `/implement` or `/review` when done
-</instructions>
 
-<error_handling>
+## Error Handling
+
 - **Plan/tasks not found**: Inform user to run previous commands
 - **Dependency blocked**: List which tasks need to complete first
 - **Implementation error**: Report issue, keep task unchecked
-</error_handling>

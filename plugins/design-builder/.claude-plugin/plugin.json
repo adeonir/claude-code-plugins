@@ -1,6 +1,6 @@
 {
   "name": "design-builder",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Extract copy and design from references to build frontend components or generate prompts for AI tools",
   "author": {
     "name": "Adeonir Kohl"

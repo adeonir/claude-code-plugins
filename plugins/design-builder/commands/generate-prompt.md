@@ -3,14 +3,19 @@ description: Generate optimized prompt for design tools
 argument-hint: [--target=replit|v0|lovable|figma]
 ---
 
-<objective>
-Generate an optimized prompt for AI design tools by invoking the prompt-generator subagent.
-</objective>
+# Generate Prompt Command
 
-<instructions>
-Invoke the `prompt-generator` subagent to generate the prompt.
+Generate an optimized prompt for AI design tools.
+
+## Arguments
+
+- `--target` - Target platform (replit, v0, lovable, figma)
 
 Arguments received: $ARGUMENTS
+
+## Process
+
+Invoke the `prompt-generator` subagent to generate the prompt.
 
 The prompt-generator will:
 1. Locate copy.yaml and design.json
@@ -18,10 +23,9 @@ The prompt-generator will:
 3. Generate prompt-{target}.md optimized for the platform
 
 Wait for the agent to complete and inform the user of the result.
-</instructions>
 
-<error_handling>
-- **No copy.yaml found**: Ask user for brief project description.
-- **No design.json found**: Run /extract-design first to extract design tokens.
-- **Invalid target**: Valid targets: replit, v0, lovable, figma.
-</error_handling>
+## Error Handling
+
+- **No copy.yaml found**: Ask user for brief project description
+- **No design.json found**: Run /extract-design first to extract design tokens
+- **Invalid target**: Valid targets: replit, v0, lovable, figma
