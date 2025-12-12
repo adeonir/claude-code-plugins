@@ -1,156 +1,81 @@
 # Debugging Skill
 
-Guide for iterative debugging with hypothesis generation, log injection, and runtime analysis.
+Guide for debugging with targeted log injection and runtime analysis.
 
 ## When to Use
 
-This skill activates when users describe bugs or request debugging help:
+Activates when users describe bugs:
 - "X is not working"
 - "Getting error Y when doing Z"
 - "Something broke after [change]"
-- "Can you help debug [issue]?"
 
-## Debugging Approach
+## Log Format
 
-### 1. Hypothesis-Driven Debugging
+```
+[DEBUG] [file:line] description { values }
+```
 
-Never guess randomly. Always:
-- Generate 3-5 hypotheses ranked by probability
-- Each hypothesis needs: description, code evidence, verification method
-- Test most likely hypothesis first
+- `[DEBUG]` - Prefix for grep and cleanup
+- `[file:line]` - Location for navigation
+- `description` - What this log checks
+- `{ values }` - Relevant data (no sensitive info)
 
-### 2. Strategic Log Injection
-
-Add logs that answer specific questions:
-- Is this function being called?
-- What value does this variable have at this point?
-- Which branch of this conditional is taken?
-- What's the order of execution?
-
-### 3. Iterative Refinement
-
-Debug cycle:
-1. Hypothesize -> 2. Instrument -> 3. Reproduce -> 4. Analyze -> 5. Fix or Refine
-
-## Log Patterns by Framework
+## Log Patterns
 
 ### React/Next.js
 
-**Component Lifecycle**
 ```javascript
-console.log('[DEBUG] [Component.tsx:10] [H1] Mount', { props });
+// Lifecycle
+console.log('[DEBUG] [Component.tsx:10] mount', { props });
 
+// Effect
 useEffect(() => {
-  console.log('[DEBUG] [Component.tsx:15] [H1] Effect run', { deps });
-  return () => console.log('[DEBUG] [Component.tsx:17] [H1] Cleanup');
+  console.log('[DEBUG] [Component.tsx:15] effect run', { deps });
+  return () => console.log('[DEBUG] [Component.tsx:17] cleanup');
 }, [deps]);
-```
 
-**State Updates**
-```javascript
-console.log('[DEBUG] [Component.tsx:25] [H1] setState', { prev: state, next: newValue });
-```
-
-**Re-render Tracking**
-```javascript
-console.log('[DEBUG] [Component.tsx:5] [H1] Render', { renderCount: ++renderCount });
+// State
+console.log('[DEBUG] [Component.tsx:25] setState', { prev: state, next: newValue });
 ```
 
 ### Node.js/Express
 
-**Request Flow**
 ```javascript
-console.log('[DEBUG] [route.ts:10] [H1] Request', { method: req.method, path: req.path, body: req.body });
-console.log('[DEBUG] [route.ts:50] [H1] Response', { status: res.statusCode });
+// Request
+console.log('[DEBUG] [route.ts:10] request', { method: req.method, path: req.path });
+
+// Error
+console.log('[DEBUG] [service.ts:30] error', { name: err.name, message: err.message });
 ```
 
-**Middleware Chain**
+### API Calls
+
 ```javascript
-console.log('[DEBUG] [auth.ts:5] [H1] Auth middleware', { hasToken: !!req.headers.authorization });
-```
-
-**Error Handling**
-```javascript
-console.log('[DEBUG] [service.ts:30] [H1] Error', { name: err.name, message: err.message });
-```
-
-### API/Fetch Calls
-
-**Request/Response**
-```javascript
-console.log('[DEBUG] [api.ts:10] [H1] Fetch start', { url, method });
-console.log('[DEBUG] [api.ts:15] [H1] Fetch complete', { status: res.status, ok: res.ok });
-```
-
-### State Management (Redux/Zustand)
-
-**Action Dispatch**
-```javascript
-console.log('[DEBUG] [store.ts:20] [H1] Action', { type: action.type, payload: action.payload });
-console.log('[DEBUG] [store.ts:25] [H1] State after', { relevantSlice });
+console.log('[DEBUG] [api.ts:10] fetch start', { url, method });
+console.log('[DEBUG] [api.ts:15] fetch done', { status: res.status, ok: res.ok });
 ```
 
 ## Common Bug Patterns
 
-### Null/Undefined Access
-**Symptom**: "Cannot read property X of undefined"
-**Check**: Optional chaining, default values, data loading states
-
-### Race Conditions
-**Symptom**: Works sometimes, fails randomly
-**Check**: Async operation ordering, state updates during renders
-
-### Stale Closures
-**Symptom**: Using old values in callbacks
-**Check**: useCallback dependencies, event handler bindings
-
-### API Contract Mismatch
-**Symptom**: Data not displaying correctly
-**Check**: Response shape vs expected shape, null handling
-
-### Auth/Session Issues
-**Symptom**: Logged out unexpectedly, actions fail after time
-**Check**: Token expiry, refresh logic, cookie persistence
-
-### Memory Leaks
-**Symptom**: App slows down over time
-**Check**: Effect cleanup, event listener removal, subscription unsubscribe
-
-## Log Format Standard
-
-```
-[DEBUG] [file:line] [hypothesis] message { values }
-```
-
-Components:
-- `[DEBUG]` - Prefix for easy grep and cleanup
-- `[file:line]` - Location for quick navigation
-- `[hypothesis]` - Which hypothesis this log verifies (H1, H2, etc.)
-- `message` - What this log is checking
-- `{ values }` - Relevant data (avoid sensitive info)
+| Pattern | Symptom | Check |
+|---------|---------|-------|
+| Null access | "Cannot read property X of undefined" | Optional chaining, defaults |
+| Race condition | Works sometimes, fails randomly | Async ordering, state during render |
+| Stale closure | Using old values in callbacks | useCallback deps, event bindings |
+| API mismatch | Data not displaying | Response shape, null handling |
+| Auth issues | Logged out unexpectedly | Token expiry, refresh logic |
 
 ## Cleanup
 
-After debugging is complete, remove all logs:
+After debugging, remove all logs:
 
 ```bash
-# Find all debug logs
-grep -rn '\[DEBUG\]' . --include='*.ts' --include='*.tsx' --include='*.js' --include='*.jsx'
-
-# Verify before removing
-git diff --stat
+grep -rn '\[DEBUG\]' . --include='*.ts' --include='*.tsx' --include='*.js'
 ```
 
 ## MCP Integration
 
-### Console Ninja
-When available, Console Ninja MCP provides:
-- Runtime values without modifying code
-- Test status and errors
-- Code coverage information
-
-### Chrome DevTools
-When available, DevTools MCP provides:
-- Network request/response inspection
-- Browser console logs
-- DOM state inspection
+| MCP | Provides |
+|-----|----------|
+| Console Ninja | Runtime values, test status, coverage |
+| Chrome DevTools | Network inspection, browser console, DOM state |
