@@ -22,9 +22,9 @@
     {
       "name": "design-builder",
       "source": "./plugins/design-builder",
-      "description": "Extract copy and design from references to build frontend components or generate prompts for AI tools",
-      "version": "1.0.0",
-      "keywords": ["design", "frontend", "components", "prompt", "ai-tools"]
+      "description": "Extract copy and design from references to build frontend components or generate prompts for AI tools. Supports design variations for visual exploration.",
+      "version": "2.0.0",
+      "keywords": ["design", "frontend", "components", "prompt", "ai-tools", "variations"]
     },
     {
       "name": "git-helpers",

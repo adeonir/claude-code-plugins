@@ -1,24 +1,26 @@
 {
   "name": "design-builder",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Extract copy and design from references to build frontend components or generate prompts for AI tools",
   "author": {
     "name": "Adeonir Kohl"
   },
   "repository": "https://github.com/adeonir/claude-code-plugins",
   "license": "MIT",
-  "keywords": ["copy", "design", "prompt", "frontend", "ai-tools"],
+  "keywords": ["copy", "design", "prompt", "frontend", "ai-tools", "variations"],
   "commands": [
     "./commands/extract-copy.md",
     "./commands/extract-design.md",
     "./commands/generate-prompt.md",
-    "./commands/build-frontend.md"
+    "./commands/build-frontend.md",
+    "./commands/select-variation.md"
   ],
   "agents": [
     "./agents/copy-extractor.md",
     "./agents/design-extractor.md",
     "./agents/frontend-builder.md",
-    "./agents/prompt-generator.md"
+    "./agents/prompt-generator.md",
+    "./agents/variations-builder.md"
   ],
   "skills": [
     "./skills/frontend-design/SKILL.md"

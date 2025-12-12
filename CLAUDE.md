@@ -29,8 +29,9 @@ plugins/
 │
 ├── design-builder/           # Frontend generation plugin
 │   ├── .claude-plugin/plugin.json
-│   ├── agents/               # Subagents (copy-extractor, design-extractor, etc.)
-│   ├── commands/             # Slash commands (/extract-copy, /extract-design, etc.)
+│   ├── agents/               # Subagents (copy-extractor, design-extractor, variations-builder, etc.)
+│   ├── commands/             # Slash commands (/extract-copy, /extract-design, /select, etc.)
+│   ├── templates/            # HTML templates (preview.html)
 │   └── skills/               # Auto-loaded skills (frontend-design)
 │
 └── git-helpers/              # Git workflow plugin
@@ -67,9 +68,14 @@ Two entry points, each can end with `/build-frontend` or `/generate-prompt`:
 - **Full**: URL -> `/extract-copy` -> `copy.yaml` -> `/extract-design` -> `design.json`
 - **Minimal**: Image -> `/extract-design` -> `design.json` (with brief project description)
 
-Then choose: `/build-frontend` (Claude Code builds it) or `/generate-prompt` (for Replit/v0/Lovable)
+Then choose:
+- `/build-frontend` (single build)
+- `/build-frontend --variations 3` (multiple variations for comparison)
+- `/generate-prompt` (for Replit/v0/Lovable)
 
-Outputs go to `./prompts/` directory.
+**Design Variations**: Generate 2-3 layout presets (editorial, startup, bold) with different structures but same design tokens. Compare in `preview.html`, then `/select <name>` to choose.
+
+Outputs go to `./prompts/` directory (or `./outputs/` for variations).
 
 ### git-helpers
 Workflow: `/code-review` -> `/commit` -> `/details` -> `/create-pr`
