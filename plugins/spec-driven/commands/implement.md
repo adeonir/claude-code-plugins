@@ -31,7 +31,7 @@ Read:
 - `.specs/{branch}/plan.md` - Technical decisions
 - `.specs/{branch}/tasks.md` - Task list and progress
 
-If files don't exist, inform user to run `/plan` and `/tasks` first.
+If files don't exist, inform user to run `/spec-driven:plan` and `/spec-driven:tasks` first.
 
 ### Step 2: Parse Scope
 
@@ -63,7 +63,7 @@ After execution:
 - Show files created/modified
 - Show remaining tasks
 - Suggest commit message
-- Next steps: continue with `/implement` or `/review` when done
+- Next steps: continue with `/spec-driven:implement` or `/spec-driven:review` when done
 
 ## Error Handling
 

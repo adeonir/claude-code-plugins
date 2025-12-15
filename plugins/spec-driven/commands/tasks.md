@@ -18,7 +18,7 @@ git branch --show-current
 
 Read `.specs/{branch}/plan.md`
 
-If file doesn't exist, inform user to run `/plan` first.
+If file doesn't exist, inform user to run `/spec-driven:plan` first.
 
 ### Step 2: Generate Tasks
 
@@ -36,7 +36,7 @@ The agent will create `.specs/{branch}/tasks.md` with:
 
 Inform the user:
 - Tasks created at `.specs/{branch}/tasks.md`
-- Next step: `/implement` to start implementation
+- Next step: `/spec-driven:implement` to start implementation
 
 Show a summary table:
 ```
@@ -49,10 +49,10 @@ Show a summary table:
 | Testing & Validation | T007-T008 | Medium |
 | Polish & Documentation | T009 | Low |
 
-Run `/implement` to start, or `/implement T001` for a specific task.
+Run `/spec-driven:implement` to start, or `/spec-driven:implement T001` for a specific task.
 ```
 
 ## Error Handling
 
-- **Plan not found**: Inform user to run `/plan` first
+- **Plan not found**: Inform user to run `/spec-driven:plan` first
 - **Plan incomplete**: Point out missing sections, suggest updating plan

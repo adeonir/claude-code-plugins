@@ -18,7 +18,7 @@ git branch --show-current
 
 Read `.specs/{branch}/spec.md`
 
-If file doesn't exist, inform user to run `/spec` first.
+If file doesn't exist, inform user to run `/spec-driven:spec` first.
 
 ### Step 2: Find Clarifications Needed
 
@@ -26,7 +26,7 @@ Search for all `[NEEDS CLARIFICATION: ...]` markers in the spec.
 
 If none found:
 - Inform user the spec is complete
-- Suggest running `/plan` next
+- Suggest running `/spec-driven:plan` next
 - Exit
 
 ### Step 3: Present Questions
@@ -49,10 +49,10 @@ For each answered question:
 After all clarifications:
 - Show summary of what was clarified
 - Check if any new clarifications emerged
-- Suggest `/plan` as next step if spec is complete
+- Suggest `/spec-driven:plan` as next step if spec is complete
 
 ## Error Handling
 
-- **Spec not found**: Inform user to run `/spec` first
+- **Spec not found**: Inform user to run `/spec-driven:spec` first
 - **User unsure**: Mark as still needing clarification, move on
 - **Conflicting answers**: Ask for resolution before proceeding

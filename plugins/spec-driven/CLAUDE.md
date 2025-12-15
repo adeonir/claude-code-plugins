@@ -10,6 +10,7 @@ spec-driven/
 │   └── plugin.json
 ├── .mcp.json
 ├── agents/
+│   ├── web-researcher.md
 │   ├── code-explorer.md
 │   ├── code-architect.md
 │   ├── task-generator.md
@@ -43,8 +44,9 @@ spec-driven/
     |
     +---> .specs/{branch}/spec.md (updated)
     v
-/plan
+/plan [additional instructions]
     |
+    +---> .specs/{branch}/research.md (if needed)
     +---> .specs/{branch}/plan.md
     v
 /tasks
@@ -66,7 +68,7 @@ spec-driven/
 |---------|-------------|
 | `/spec` | Create specification from description or PRD |
 | `/clarify` | Resolve ambiguities marked [NEEDS CLARIFICATION] |
-| `/plan` | Explore codebase and generate technical plan |
+| `/plan` | Research (if needed), explore codebase, and generate technical plan |
 | `/tasks` | Generate task list from plan |
 | `/implement` | Execute next task, or specify scope (T001, T001-T005, --all) |
 | `/review` | Review code and summarize work |
@@ -75,6 +77,7 @@ spec-driven/
 
 | Agent | Role |
 |-------|------|
+| `web-researcher` | Researches external technologies, APIs, and best practices |
 | `code-explorer` | Traces feature implementations, maps architecture |
 | `code-architect` | Creates technical plans with decisive choices |
 | `task-generator` | Decomposes plans into trackable tasks |
@@ -98,6 +101,7 @@ All artifacts are stored in `.specs/{branch}/`:
 | File | Created By | Purpose |
 |------|------------|---------|
 | `spec.md` | /spec | Feature requirements and acceptance criteria |
+| `research.md` | /plan | External research findings (when applicable) |
 | `plan.md` | /plan | Technical architecture and implementation map |
 | `tasks.md` | /tasks | Trackable task list with dependencies |
 

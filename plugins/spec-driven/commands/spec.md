@@ -61,7 +61,7 @@ For any unclear or underspecified items, add:
 Inform the user:
 - Spec file created at `.specs/{branch}/spec.md`
 - Number of items needing clarification (if any)
-- Next step: `/clarify` to resolve ambiguities, or `/plan` if none
+- Next step: `/spec-driven:clarify` to resolve ambiguities, or `/spec-driven:plan` if none
 
 ## Error Handling
 

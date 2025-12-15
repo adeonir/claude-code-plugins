@@ -16,7 +16,7 @@ plugins/
 ├── spec-driven/              # Specification-driven workflow
 │   ├── .claude-plugin/plugin.json
 │   ├── .mcp.json             # Serena MCP
-│   ├── agents/               # Subagents (code-explorer, code-architect, etc.)
+│   ├── agents/               # Subagents (web-researcher, code-explorer, code-architect, etc.)
 │   ├── commands/             # Slash commands (/spec, /plan, /tasks, etc.)
 │   └── templates/            # Artifact templates
 │
@@ -54,7 +54,9 @@ Each plugin follows this structure:
 Specification-driven development workflow:
 `/spec` -> `/clarify` -> `/plan` -> `/tasks` -> `/implement` -> `/review`
 
-Artifacts persisted in `.specs/{branch}/` (spec.md, plan.md, tasks.md).
+The `/plan` command automatically invokes `web-researcher` agent when the spec mentions external technologies or when the user provides additional research instructions.
+
+Artifacts persisted in `.specs/{branch}/` (spec.md, research.md, plan.md, tasks.md).
 
 ### debug-tools
 Iterative debugging workflow: `/debug "bug description"`
