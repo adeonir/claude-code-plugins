@@ -94,7 +94,6 @@ This plugin optionally uses MCP servers for enhanced debugging:
 |-----|---------|
 | Console Ninja | Runtime values, test status, code coverage |
 | Chrome DevTools | Network inspection, browser console, DOM |
-| Serena | Semantic code analysis via LSP |
 
 ### Prerequisites
 
@@ -110,20 +109,7 @@ claude mcp add console-ninja -s project -- npx "-y" "-c" "node ~/.console-ninja/
 claude mcp add chrome-devtools -s project -- npx -y @anthropic/chrome-devtools-mcp
 ```
 
-**Serena** (optional):
-```bash
-# Requires uvx (uv tool runner):
-claude mcp add serena -s project -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --enable-web-dashboard false
-```
-
-### Serena Benefits
-
-When Serena MCP is available, agents use semantic code analysis:
-
-- `find_symbol` - Precise function/class location for hypothesis generation
-- `find_referencing_symbols` - Trace callers and dependencies
-- `insert_after_symbol` - Semantic log placement at function entry points
-- `get_symbols_overview` - Understand file structure quickly
+> **Note:** For semantic code analysis via LSP, install the `spec-driven` plugin which includes Serena MCP.
 
 ## Cleanup
 

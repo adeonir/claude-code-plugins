@@ -7,10 +7,6 @@
     "chrome-devtools": {
       "command": "npx",
       "args": ["-y", "@anthropic/chrome-devtools-mcp"]
-    },
-    "serena": {
-      "command": "uvx",
-      "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--enable-web-dashboard", "false"]
     }
   }
 }

@@ -1,13 +1,13 @@
 {
   "name": "debug-tools",
-  "version": "1.2.0",
-  "description": "Debugging with code analysis, targeted log injection, and runtime inspection via Console Ninja, Chrome DevTools, and Serena MCP",
+  "version": "1.2.1",
+  "description": "Debugging with code analysis, targeted log injection, and runtime inspection via Console Ninja and Chrome DevTools MCP",
   "author": {
     "name": "Adeonir Kohl"
   },
   "repository": "https://github.com/adeonir/claude-code-plugins",
   "license": "MIT",
-  "keywords": ["debug", "debugging", "logs", "runtime", "console-ninja", "devtools", "serena", "lsp"],
+  "keywords": ["debug", "debugging", "logs", "runtime", "console-ninja", "devtools"],
   "commands": [
     "./commands/debug.md"
   ],

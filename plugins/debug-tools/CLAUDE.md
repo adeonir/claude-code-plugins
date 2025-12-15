@@ -16,7 +16,7 @@ Systematic debugging through:
 debug-tools/
 ├── .claude-plugin/
 │   └── plugin.json
-├── .mcp.json                  # Console Ninja + Chrome DevTools + Serena
+├── .mcp.json                  # Console Ninja + Chrome DevTools
 ├── agents/
 │   ├── bug-investigator.md    # Investigates and finds root cause
 │   └── log-injector.md        # Adds targeted debug logs
@@ -69,7 +69,6 @@ Optional MCP servers for enhanced debugging:
 |-----|---------|
 | Console Ninja | Runtime values, test status, code coverage |
 | Chrome DevTools | Network inspection, browser console, DOM |
-| Serena | Semantic code analysis via LSP |
 
 ### Setup
 
@@ -79,10 +78,9 @@ claude mcp add console-ninja -s project -- npx "-y" "-c" "node ~/.console-ninja/
 
 # Chrome DevTools (requires Chrome remote debugging)
 claude mcp add chrome-devtools -s project -- npx -y @anthropic/chrome-devtools-mcp
-
-# Serena (requires uvx)
-claude mcp add serena -s project -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --enable-web-dashboard false
 ```
+
+> **Note:** For semantic code analysis via LSP, install the `spec-driven` plugin which includes Serena MCP.
 
 ## Log Format
 
