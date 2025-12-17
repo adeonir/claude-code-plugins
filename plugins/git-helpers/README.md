@@ -2,11 +2,32 @@
 
 Git workflow helper commands for Claude Code.
 
+> **Part of [claude-code-plugins](https://github.com/adeonir/claude-code-plugins)** - A curated marketplace of Claude Code plugins for feature development, debugging, frontend generation, and git helpers.
+
+## Features
+
+- Code review with quality analysis and confidence-based filtering
+- Auto-generated commit messages from actual diffs
+- Structured PR descriptions with impact assessment
+- Direct PR creation via GitHub CLI
+- Supports uncommitted changes and branch comparisons
+
 ## Installation
 
+### Prerequisites
+
+- [Claude Code](https://claude.ai/code) - Anthropic's official CLI for Claude
+- [gh](https://cli.github.com/) - GitHub CLI (required for `/create-pr` command)
+
+### Install Plugin
+
 ```bash
-/plugin install git-helpers
+claude /plugin install git-helpers
 ```
+
+This command automatically:
+- Downloads the plugin from the marketplace
+- Makes all git workflow commands available in your Claude Code session
 
 ## Commands
 

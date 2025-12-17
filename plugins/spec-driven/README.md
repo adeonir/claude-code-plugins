@@ -2,6 +2,8 @@
 
 Specification-driven development workflow for Claude Code with persistent artifacts.
 
+> **Part of [claude-code-plugins](https://github.com/adeonir/claude-code-plugins)** - A curated marketplace of Claude Code plugins for feature development, debugging, frontend generation, and git helpers.
+
 ## Features
 
 - Structured specification creation from descriptions or PRDs
@@ -14,9 +16,21 @@ Specification-driven development workflow for Claude Code with persistent artifa
 
 ## Installation
 
+### Prerequisites
+
+- [Claude Code](https://claude.ai/code) - Anthropic's official CLI for Claude
+- [uv](https://github.com/astral-sh/uv) - Required by Serena MCP for semantic code operations
+
+### Install Plugin
+
 ```bash
 claude /plugin install spec-driven
 ```
+
+This command automatically:
+- Downloads the plugin from the marketplace
+- Configures Serena MCP for semantic code operations
+- Makes all commands available in your Claude Code session
 
 ## Quick Start
 
@@ -97,10 +111,7 @@ This plugin uses [Serena](https://github.com/oraios/serena) for semantic code op
 | `/plan` | `find_referencing_symbols` | Impact analysis |
 | `/implement` | `insert_after_symbol` | Semantic edits |
 
-### Requirements
-
-- `uv` package manager with `uvx` command
-- Serena MCP is auto-configured via `.mcp.json`
+Serena MCP is auto-configured via `.mcp.json` when you install the plugin.
 
 ## License
 

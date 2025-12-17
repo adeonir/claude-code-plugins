@@ -2,6 +2,8 @@
 
 Iterative debugging workflow for Claude Code with hypothesis generation and runtime analysis.
 
+> **Part of [claude-code-plugins](https://github.com/adeonir/claude-code-plugins)** - A curated marketplace of Claude Code plugins for feature development, debugging, frontend generation, and git helpers.
+
 ## Features
 
 - Hypothesis-driven debugging (3-5 ranked possibilities)
@@ -13,9 +15,22 @@ Iterative debugging workflow for Claude Code with hypothesis generation and runt
 
 ## Installation
 
+### Prerequisites
+
+- [Claude Code](https://claude.ai/code) - Anthropic's official CLI for Claude
+
+### Install Plugin
+
 ```bash
 claude /plugin install debug-tools
 ```
+
+This command automatically:
+- Downloads the plugin from the marketplace
+- Configures Console Ninja and Chrome DevTools MCPs for runtime inspection
+- Makes the `/debug` command available in your Claude Code session
+
+> **Note:** Console Ninja requires the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=WallabyJs.console-ninja) installed. Chrome DevTools requires Chrome running with [remote debugging enabled](https://developer.chrome.com/docs/devtools/remote-debugging/).
 
 ## Quick Start
 
@@ -86,30 +101,14 @@ console.log('[DEBUG] [file:line] [H1] message', { values });
 - `[H1]` - Hypothesis being verified
 - `{ values }` - Relevant variable state
 
-## MCP Integration
+## MCP Servers
 
-This plugin optionally uses MCP servers for enhanced debugging:
+The plugin can leverage these MCP servers if installed:
 
 | MCP | Purpose |
 |-----|---------|
 | Console Ninja | Runtime values, test status, code coverage |
 | Chrome DevTools | Network inspection, browser console, DOM |
-
-### Prerequisites
-
-**Console Ninja** (recommended):
-```bash
-# Install VS Code extension first, then:
-claude mcp add console-ninja -s project -- npx "-y" "-c" "node ~/.console-ninja/mcp"
-```
-
-**Chrome DevTools** (optional):
-```bash
-# Enable Chrome remote debugging, then:
-claude mcp add chrome-devtools -s project -- npx -y @anthropic/chrome-devtools-mcp
-```
-
-> **Note:** For semantic code analysis via LSP, install the `spec-driven` plugin which includes Serena MCP.
 
 ## Cleanup
 

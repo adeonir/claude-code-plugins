@@ -2,6 +2,8 @@
 
 Claude Code plugin that extracts copy and design from references to build frontend components or generate prompts for AI tools.
 
+> **Part of [claude-code-plugins](https://github.com/adeonir/claude-code-plugins)** - A curated marketplace of Claude Code plugins for feature development, debugging, frontend generation, and git helpers.
+
 ## Features
 
 - Extract content structure from URLs (optional)
@@ -14,13 +16,20 @@ Claude Code plugin that extracts copy and design from references to build fronte
 
 ## Installation
 
-```bash
-# Add marketplace (if not already added)
-/plugin marketplace add adeonir/claude-code-plugins
+### Prerequisites
 
-# Install plugin
-/plugin install design-builder
+- [Claude Code](https://claude.ai/code) - Anthropic's official CLI for Claude
+
+### Install Plugin
+
+```bash
+claude /plugin install design-builder
 ```
+
+This command automatically:
+- Downloads the plugin from the marketplace
+- Auto-loads the `frontend-design` skill for distinctive aesthetics
+- Makes all commands available in your Claude Code session
 
 ## Workflows
 
