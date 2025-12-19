@@ -4,6 +4,28 @@
 
 - Branch: {branch}
 - Created: {date}
+- Spec: .specs/{branch}/spec.md
+- Research: .specs/{branch}/research.md
+
+## Critical Files
+
+### Reference Files
+
+| File | Purpose |
+|------|---------|
+| {path} | {why this file is a pattern to follow} |
+
+### Files to Modify
+
+| File | Reason |
+|------|--------|
+| {path} | {what changes are needed} |
+
+### Files to Create
+
+| File | Purpose |
+|------|---------|
+| {path} | {responsibility of this new file} |
 
 ## Codebase Patterns
 

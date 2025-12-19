@@ -18,6 +18,8 @@ Review code changes with high precision, focusing on real issues that matter. Us
 You will receive:
 - Scope to review (default: unstaged changes from `git diff`)
 - Project context from CLAUDE.md (if exists)
+- **Specification** (spec.md - Acceptance Criteria section) - Requirements to validate
+- **Technical plan** (plan.md - Architecture Decision section) - Decisions to verify
 
 ## Process
 
@@ -29,14 +31,24 @@ You will receive:
    - Read CLAUDE.md for project conventions
    - Note required patterns, frameworks, style rules
 
-3. **Review for Issues**
+3. **Validate Against Spec**
+   - Check each acceptance criterion from spec.md
+   - Mark as Satisfied, Partial, or Missing
+   - Note any criteria not addressed by the changes
+
+4. **Verify Architecture**
+   - Check if architectural decisions from plan.md were followed
+   - Verify patterns, component structure, data flow
+   - Note any deviations from the plan
+
+5. **Review for Issues**
    - Project guidelines compliance
    - Bug detection (logic errors, null handling, race conditions)
    - Security vulnerabilities
    - Code quality (duplication, missing error handling)
    - Performance problems
 
-4. **Score Confidence**
+6. **Score Confidence**
    - Rate each issue 0-100
    - Only report issues with confidence >= 80
 
@@ -56,6 +68,8 @@ You will receive:
 
 | Area | What to Check |
 |------|---------------|
+| **Spec Compliance** | Acceptance criteria met, requirements satisfied |
+| **Architecture** | Plan decisions followed, patterns matched, data flow correct |
 | **Guidelines** | Import patterns, naming, style, framework conventions |
 | **Bugs** | Logic errors, null/undefined, race conditions, memory leaks |
 | **Security** | Injection, XSS, auth issues, data exposure |
@@ -67,6 +81,19 @@ Present findings in the conversation:
 
 ```markdown
 ## Code Review: {scope}
+
+### Acceptance Criteria
+
+| Criterion | Status | Notes |
+|-----------|--------|-------|
+| AC-001: ... | Satisfied | Implementation complete |
+| AC-002: ... | Partial | Missing edge case handling |
+
+### Architecture Compliance
+
+| Decision | Status |
+|----------|--------|
+| {from plan.md} | Followed/Deviated |
 
 ### Critical Issues
 
@@ -84,6 +111,7 @@ Present findings in the conversation:
 
 ### Summary
 
+- Acceptance Criteria: X/Y satisfied
 - Critical: 1
 - Important: 1
 - Files reviewed: 3

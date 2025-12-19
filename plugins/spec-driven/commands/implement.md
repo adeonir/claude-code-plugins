@@ -28,10 +28,22 @@ git branch --show-current
 ```
 
 Read:
-- `.specs/{branch}/plan.md` - Technical decisions
+- `.specs/{branch}/spec.md` - Requirements (extract Acceptance Criteria section)
+- `.specs/{branch}/plan.md` - Technical decisions and Critical Files
+- `.specs/{branch}/research.md` - External research (if exists, extract key findings summary)
 - `.specs/{branch}/tasks.md` - Task list and progress
 
-If files don't exist, inform user to run `/spec-driven:plan` and `/spec-driven:tasks` first.
+If plan.md or tasks.md don't exist, inform user to run `/spec-driven:plan` and `/spec-driven:tasks` first.
+
+### Step 1.5: Load Critical Files
+
+From plan.md, identify the `## Critical Files` section.
+
+For the tasks about to execute:
+- Read the **Reference Files** relevant to current tasks (max 5 files)
+- These provide patterns and conventions to follow during implementation
+
+This ensures the implement-agent has concrete examples to follow.
 
 ### Step 2: Parse Scope
 
@@ -48,11 +60,17 @@ For each task to execute:
 
 Invoke the `implement-agent` with:
 - Task scope
-- Technical plan
-- Current task list
+- **Specification** (spec.md - Acceptance Criteria section)
+- Technical plan (plan.md)
+- **Research findings** (research.md summary, if exists)
+- Current task list (tasks.md)
+- **Reference file contents** (patterns to follow for current tasks)
+- Current branch name
 
 The agent will:
 - Implement each task following the plan
+- Validate against acceptance criteria
+- Follow patterns from reference files
 - Update tasks.md with checkboxes
 - Suggest atomic commits
 

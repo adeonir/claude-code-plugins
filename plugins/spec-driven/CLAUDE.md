@@ -102,8 +102,30 @@ All artifacts are stored in `.specs/{branch}/`:
 |------|------------|---------|
 | `spec.md` | /spec | Feature requirements and acceptance criteria |
 | `research.md` | /plan | External research findings (when applicable) |
-| `plan.md` | /plan | Technical architecture and implementation map |
-| `tasks.md` | /tasks | Trackable task list with dependencies |
+| `plan.md` | /plan | Technical architecture, critical files, and implementation map |
+| `tasks.md` | /tasks | Trackable task list with dependencies and artifact references |
+
+## Context Flow
+
+Artifacts are passed between phases to ensure consistent context:
+
+```
+/spec  --> spec.md
+/plan  --> Reads: spec.md
+           Consolidates: Critical Files (Reference, Modify, Create)
+           Outputs: research.md, plan.md
+/tasks --> Reads: plan.md
+           Outputs: tasks.md (with Artifacts section)
+/implement --> Reads: spec.md (AC), plan.md (Critical Files), research.md, tasks.md
+               Loads: Reference files for current tasks (max 5)
+/review --> Reads: spec.md (AC), plan.md (decisions)
+            Validates: Acceptance criteria status, architecture compliance
+```
+
+Key context elements:
+- **Critical Files**: Reference patterns, files to modify/create (consolidated from explorers)
+- **Acceptance Criteria**: Validated during /implement and /review
+- **Research Findings**: Best practices passed to implement-agent
 
 ## Serena MCP Integration
 

@@ -16,7 +16,7 @@ Convert a technical plan (plan.md) into an actionable task list (tasks.md) with 
 ## Input
 
 You will receive:
-- Technical plan (plan.md)
+- Technical plan (plan.md) including Critical Files section
 - Current branch name
 
 ## Process
@@ -52,6 +52,12 @@ Generate `.specs/{branch}/tasks.md` using the template:
 Branch: {branch}
 Total: {count} | Completed: 0 | Remaining: {count}
 
+## Artifacts
+
+- Spec: .specs/{branch}/spec.md
+- Plan: .specs/{branch}/plan.md
+- Research: .specs/{branch}/research.md (if exists)
+
 ## Setup & Dependencies
 - [ ] T001 [P] {task_description with file path}
 - [ ] T002 [P] {task_description with file path}
@@ -77,6 +83,7 @@ Legend: [P] = parallel-safe, [B:Txxx] = blocked by task(s)
 3. **Respect dependencies** - Tasks modifying the same file cannot be parallel
 4. **Enable parallelization** - Mark independent tasks as [P]
 5. **Follow project conventions** - Match testing methodology from CLAUDE.md
+6. **File refs for complex tasks only** - Add explicit file references (indented under task) only when: multiple files involved, non-obvious patterns, or complex dependencies
 
 ## Task Guidelines
 
@@ -84,6 +91,13 @@ Good task examples:
 - `T001 [P] Create UserService interface in src/services/user.ts`
 - `T002 [B:T001] Implement UserService with repository pattern`
 - `T003 [P] Add input validation schema in src/schemas/user.ts`
+
+Complex task with file refs (only when needed):
+```
+- [ ] T004 [B:T001,T002] Integrate UserService with existing auth flow
+  - Files: `src/auth/middleware.ts`, `src/services/user.ts`
+  - Reference: `src/services/product.ts` (follow service pattern)
+```
 
 Bad task examples:
 - `T001 [P] Set up the project` (too vague)

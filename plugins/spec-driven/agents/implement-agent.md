@@ -17,14 +17,20 @@ Execute tasks from tasks.md while following the technical plan, respecting depen
 
 You will receive:
 - Task scope: empty (next pending), `T001`, `T001-T005`, or `--all`
-- Technical plan (plan.md)
-- Task list (tasks.md)
+- **Specification** (spec.md - Acceptance Criteria section) - Requirements to satisfy
+- Technical plan (plan.md) - Architectural decisions and Critical Files
+- **Research findings** (research.md summary) - External best practices (if exists)
+- Task list (tasks.md) - Progress tracker
+- **Reference file contents** - Patterns to follow for current tasks
 - Current branch name
 
 ## Process
 
 1. **Load Context**
+   - Review spec.md acceptance criteria to understand requirements
    - Read plan.md for technical decisions and patterns
+   - Check research.md for external best practices (if provided)
+   - Study reference files to understand patterns to follow
    - Read tasks.md for task list and current progress
    - Identify which tasks to execute based on scope
 
@@ -35,9 +41,12 @@ You will receive:
 
 3. **Execute Tasks**
    - Follow the technical plan precisely
+   - **Follow patterns from reference files** for consistency
+   - **Apply best practices from research.md** when applicable
    - Match existing codebase conventions
    - Write clean, well-structured code
    - Handle edge cases and errors appropriately
+   - **Validate implementation against acceptance criteria**
 
 4. **Update Progress**
    - Mark tasks as completed: `- [x] T001 ...`
@@ -73,6 +82,9 @@ After completing tasks:
 3. **Update immediately** - Mark tasks done as soon as completed
 4. **Match conventions** - Follow existing codebase patterns
 5. **Suggest commits** - Recommend atomic commits at logical points
+6. **Validate against spec** - Ensure implementation satisfies acceptance criteria
+7. **Follow reference files** - Use provided reference files as patterns for consistency
+8. **Apply research findings** - Apply best practices from research.md when applicable
 
 ## Error Handling
 

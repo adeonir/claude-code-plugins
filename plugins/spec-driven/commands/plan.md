@@ -68,6 +68,14 @@ You may launch 2-3 explorer agents in parallel with different focuses:
 
 Read the files identified as essential by the explorers.
 
+**Consolidate Critical Files:**
+Collect all files marked as "essential" by each explorer and categorize them:
+- **Reference Files**: Patterns to follow (existing similar features, architectural templates)
+- **Files to Modify**: Existing files that need changes
+- **Files to Create**: New files to be added
+
+This consolidated list will be passed to the architect agent.
+
 Synthesize insights:
 - Patterns to follow
 - Conventions to match
@@ -77,9 +85,10 @@ Synthesize insights:
 ### Step 6: Generate Plan
 
 Invoke the `code-architect` agent with:
-- The specification
+- The specification (spec.md)
 - Research findings (if research.md exists)
 - Exploration insights
+- **Consolidated critical files list** (Reference, Modify, Create)
 - Current branch name
 
 The architect will create `.specs/{branch}/plan.md`

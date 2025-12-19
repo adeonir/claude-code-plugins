@@ -16,13 +16,23 @@ Get current branch:
 git branch --show-current
 ```
 
-Read `.specs/{branch}/tasks.md` to understand what was implemented.
+Read:
+- `.specs/{branch}/spec.md` - Requirements (extract Acceptance Criteria section)
+- `.specs/{branch}/plan.md` - Architectural decisions made
+- `.specs/{branch}/tasks.md` - What was implemented
 
 ### Step 2: Review Code
 
-Invoke the `code-reviewer` agent to:
+Invoke the `code-reviewer` agent with:
+- **Specification** (spec.md - Acceptance Criteria section)
+- **Technical plan** (plan.md - Architecture Decision section)
+- git diff of changes
+
+The agent will:
 - Review all changes (git diff)
 - Check against project guidelines (CLAUDE.md)
+- **Validate acceptance criteria from spec.md**
+- **Verify architectural decisions from plan.md**
 - Detect bugs, security issues, quality problems
 - Only report issues with confidence >= 80
 
@@ -44,7 +54,12 @@ Present a summary of the feature implementation:
 {description based on completed tasks}
 
 ### Key Decisions
-{from plan.md}
+{from plan.md Architecture Decision section}
+
+### Acceptance Criteria Status
+| Criterion | Status |
+|-----------|--------|
+| AC-001: ... | Satisfied/Partial/Missing |
 
 ### Files Modified
 | File | Action |

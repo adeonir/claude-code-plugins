@@ -9,9 +9,11 @@ Specification-driven development workflow for Claude Code with persistent artifa
 - Structured specification creation from descriptions or PRDs
 - Codebase exploration and pattern analysis
 - Technical planning with decisive architectural choices
+- **Critical files consolidation** (reference patterns, files to modify/create)
 - Task decomposition with dependency tracking
 - Granular implementation (single task, range, or all)
-- Confidence-based code review
+- **Context-aware implementation** with spec validation and reference files
+- Confidence-based code review with **acceptance criteria validation**
 - Semantic code operations via Serena MCP
 
 ## Installation
@@ -83,9 +85,10 @@ All artifacts are stored in `.specs/{branch}/`:
 ```
 .specs/
 └── feature-auth/
-    ├── spec.md    # Requirements and acceptance criteria
-    ├── plan.md    # Technical architecture
-    └── tasks.md   # Trackable task list
+    ├── spec.md      # Requirements and acceptance criteria
+    ├── research.md  # External research findings (if needed)
+    ├── plan.md      # Technical architecture and critical files
+    └── tasks.md     # Trackable task list with artifact refs
 ```
 
 ## Task Markers
@@ -105,9 +108,13 @@ Tasks use markers to indicate parallelization:
 /spec --> /clarify --> /plan --> /tasks --> /implement --> /review
   |          |           |          |            |            |
   v          v           v          v            v            v
-spec.md   spec.md      plan.md   tasks.md   code +         summary
-          (updated)                         tasks.md
+spec.md   spec.md    research.md  tasks.md   code +       AC status
+          (updated)  + plan.md               tasks.md    + summary
 ```
+
+Each phase reads previous artifacts to maintain context:
+- `/implement` reads spec (AC), plan (critical files), and research
+- `/review` validates acceptance criteria and architecture decisions
 
 ## Serena MCP Integration
 

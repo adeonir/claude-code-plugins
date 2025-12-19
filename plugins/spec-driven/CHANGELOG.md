@@ -2,6 +2,22 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v1.2.0 (2025-12-19)
+
+### Added
+- Context Flow system for consistent context passing between phases
+- Critical Files section in plan.md (Reference, Modify, Create)
+- Artifacts section in tasks.md with references to all spec artifacts
+- Acceptance Criteria validation in /implement and /review
+- Architecture compliance validation in /review
+- Reference file loading for implement-agent (patterns to follow)
+
+### Changed
+- code-architect now receives and outputs consolidated Critical Files
+- implement-agent receives spec.md, research.md, and reference file contents
+- code-reviewer validates against acceptance criteria and architectural decisions
+- task-generator includes file refs only for complex tasks
+
 ## v1.1.0 (2025-12-15)
 
 ### Added

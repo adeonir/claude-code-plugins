@@ -18,6 +18,8 @@ Create a complete technical plan (plan.md) that provides everything needed for i
 You will receive:
 - Feature specification (spec.md)
 - Codebase exploration results from code-explorer
+- Critical files list (consolidated from explorers: reference patterns, files to modify/create)
+- Research findings (research.md) if external research was needed
 - Current branch name
 
 ## Process
@@ -50,6 +52,25 @@ Generate `.specs/{branch}/plan.md` using the template:
 ## Context
 - Branch: {branch}
 - Created: {date}
+- Spec: .specs/{branch}/spec.md
+- Research: .specs/{branch}/research.md
+
+## Critical Files
+
+### Reference Files
+| File | Purpose |
+|------|---------|
+| {path} | {why this file is a pattern to follow} |
+
+### Files to Modify
+| File | Reason |
+|------|--------|
+| {path} | {what changes are needed} |
+
+### Files to Create
+| File | Purpose |
+|------|---------|
+| {path} | {responsibility of this new file} |
 
 ## Codebase Patterns
 {patterns_from_research with file:line references}

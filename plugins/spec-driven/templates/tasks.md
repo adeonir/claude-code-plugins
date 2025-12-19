@@ -6,6 +6,12 @@ Total: {count}
 Completed: 0
 Remaining: {count}
 
+## Artifacts
+
+- Spec: .specs/{branch}/spec.md
+- Plan: .specs/{branch}/plan.md
+- Research: .specs/{branch}/research.md (if exists)
+
 ## Setup & Dependencies
 
 - [ ] T001 [P] {task_description}
