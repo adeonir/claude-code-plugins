@@ -2,6 +2,23 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v3.0.0 (2025-12-22)
+
+### Added
+- `minimal` variant preset (text-only hero, extra whitespace, typography-focused)
+- Two-stage build workflow: HTML+CSS previews -> choose -> React
+- Auto-start http-server for variant comparison at localhost:8080
+
+### Changed
+- `--variants` flag no longer accepts count (always generates 4: minimal, editorial, startup, bold)
+- Renamed `preview.html` to `index.html` in outputs
+- `frontend-builder` now accepts variant reference for layout guidance
+
+### Removed
+- `/generate-prompt` command and `prompt-generator` agent
+- `/select-variation` command (just tell Claude "use editorial")
+- Prompt targets (Replit, v0, Lovable, Figma)
+
 ## v2.0.1 (2025-12-12)
 
 ### Changed

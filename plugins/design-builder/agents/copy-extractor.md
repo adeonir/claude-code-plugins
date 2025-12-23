@@ -41,7 +41,7 @@ If any required input is missing, ask the user.
 
 4. **Extract content** preserving original tone of voice
 
-5. **Generate copy.yaml** in `./prompts/`
+5. **Generate copy.yaml** in `./docs/`
 
 ## Output Format
 
@@ -329,6 +329,6 @@ If WebFetch fails:
 
 ## Output Location
 
-Save to: `./prompts/copy.yaml`
+Save to: `./docs/copy.yaml`
 
-Create the `prompts` folder if it doesn't exist.
+Create the `docs` folder if it doesn't exist.

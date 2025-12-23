@@ -1,6 +1,6 @@
 # Design Builder
 
-Claude Code plugin that extracts copy and design from references to build frontend components or generate prompts for AI tools.
+Claude Code plugin that extracts copy and design from references to build frontend components.
 
 ## Architecture
 
@@ -11,26 +11,22 @@ design-builder/
 ├── agents/                         # Specialized subagents
 │   ├── copy-extractor.md           # Content Strategist
 │   ├── design-extractor.md         # Creative Director
-│   ├── prompt-generator.md         # Prompt Engineer
-│   ├── frontend-builder.md         # Frontend Engineer
-│   └── variations-builder.md       # Variations Engineer
+│   ├── frontend-builder.md         # Frontend Engineer (React)
+│   └── variants-builder.md         # Variants Engineer (HTML+CSS)
 ├── commands/                       # Slash commands
 │   ├── extract-copy.md
 │   ├── extract-design.md
-│   ├── generate-prompt.md
-│   ├── build-frontend.md
-│   └── select-variation.md
+│   └── build-frontend.md
 ├── skills/                         # Auto-loaded guidance
 │   └── frontend-design/SKILL.md
-└── prompts/                        # Output directory
+└── docs/                           # Output directory
     ├── copy.yaml
-    ├── design.json
-    └── prompt-{target}.md
+    └── design.json
 ```
 
 ## Workflows
 
-Two entry points, each can end with `/build-frontend` or `/generate-prompt`:
+Two entry points:
 
 ```
 # Full: Start from URL reference
@@ -39,31 +35,34 @@ URL -> /extract-copy -> copy.yaml -> /extract-design -> design.json
 # Minimal: Start from design image only (with brief project description)
 Image -> /extract-design -> design.json
 
-# Then choose output:
--> /build-frontend              # Single build
--> /build-frontend --variations # Multiple variations
--> /generate-prompt             # For Replit/v0/Lovable
+# Then build:
+-> /build-frontend              # React direto
+-> /build-frontend --variants   # 4 previews HTML -> escolha -> React
 ```
 
-### Design Variations
+### Design Variants
 
-Generate 2-3 layout variations to compare before choosing:
+Generate 4 HTML+CSS previews to compare before building React:
 
 ```
-/build-frontend --variations 3
+/build-frontend --variants
     |
     v
 Generates ./outputs/
-  editorial/   # Split hero, generous spacing, flat cards
-  startup/     # Centered hero, balanced, shadow cards
-  bold/        # Fullscreen hero, compact, bordered cards
-  preview.html # Side-by-side comparison
+  minimal/index.html    # Text hero, extra whitespace, no cards
+  editorial/index.html  # Split hero, generous spacing, flat cards
+  startup/index.html    # Centered hero, balanced, shadow cards
+  bold/index.html       # Fullscreen hero, compact, bordered cards
+  index.html            # Side-by-side comparison
     |
     v
-/select editorial
+npx http-server ./outputs -o -p 8080
     |
     v
-Copies to ./src/ (outputs/ preserved as backup)
+User: "use editorial"
+    |
+    v
+frontend-builder creates React based on editorial layout
 ```
 
 ## Commands
@@ -72,9 +71,8 @@ Copies to ./src/ (outputs/ preserved as backup)
 |---------|-------------|
 | `/extract-copy` | Extract content from URL to copy.yaml (optional) |
 | `/extract-design` | Extract design from images to design.json |
-| `/generate-prompt` | Generate prompt for target platform |
-| `/build-frontend` | Build frontend components (supports `--variations N`) |
-| `/select` | Select a variation after comparison |
+| `/build-frontend` | Build React directly |
+| `/build-frontend --variants` | Generate 4 HTML previews, then build React from chosen variant |
 
 ## Agents
 
@@ -82,18 +80,18 @@ Copies to ./src/ (outputs/ preserved as backup)
 |-------|------|
 | `copy-extractor` | Content Strategist |
 | `design-extractor` | Creative Director |
-| `prompt-generator` | Prompt Engineer |
-| `frontend-builder` | Frontend Engineer |
-| `variations-builder` | Variations Engineer |
+| `frontend-builder` | Frontend Engineer - builds React (from variant or direct) |
+| `variants-builder` | Variants Engineer - generates 4 HTML+CSS previews |
 
 Agents can be invoked directly: "Use the design-extractor agent to analyze this image"
 
-## Variation Presets
+## Variant Presets
 
 Each preset applies design guidelines (60-30-10, visual hierarchy, rhythm):
 
 | Preset | Style | Hero | Spacing | Cards |
 |--------|-------|------|---------|-------|
+| `minimal` | Ultra clean | Text only | Extra generous | None |
 | `editorial` | Magazine feel | Split 50/50 | Generous | Flat |
 | `startup` | SaaS modern | Centered CTA | Balanced | Shadows |
 | `bold` | High impact | Fullscreen | Compact | Bordered |
@@ -104,7 +102,7 @@ Each preset applies design guidelines (60-30-10, visual hierarchy, rhythm):
 |-------|-------------|
 | `frontend-design` | Design principles auto-loaded for frontend tasks (avoids AI slop aesthetics) |
 
-The frontend-builder and variations-builder agents MUST apply the frontend-design skill.
+The frontend-builder and variants-builder agents MUST apply the frontend-design skill.
 
 ## Project Types
 
@@ -114,15 +112,6 @@ The frontend-builder and variations-builder agents MUST apply the frontend-desig
 | `website` | Multi-page site | Corporate, blog, portfolio |
 | `webapp` | Interactive application | Dashboard, SaaS, admin panel |
 | `app` | Mobile application | iOS/Android, PWA |
-
-## Prompt Targets
-
-| Target | Style | Best For |
-|--------|-------|----------|
-| `replit` | Detailed, design.json inline | Full landing pages with images |
-| `v0` | Concise, shadcn/ui | Quick React components |
-| `lovable` | UX-focused, flows | Apps with Supabase backend |
-| `figma` | Component specs | Design system documentation |
 
 ## Output Formats
 

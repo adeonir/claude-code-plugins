@@ -29,8 +29,8 @@ plugins/
 │
 ├── design-builder/           # Frontend generation plugin
 │   ├── .claude-plugin/plugin.json
-│   ├── agents/               # Subagents (copy-extractor, design-extractor, variations-builder, etc.)
-│   ├── commands/             # Slash commands (/extract-copy, /extract-design, /select, etc.)
+│   ├── agents/               # Subagents (copy-extractor, design-extractor, variants-builder, etc.)
+│   ├── commands/             # Slash commands (/extract-copy, /extract-design, /build-frontend, etc.)
 │   ├── templates/            # HTML templates (preview.html)
 │   └── skills/               # Auto-loaded skills (frontend-design)
 │
@@ -66,18 +66,15 @@ Conversational flow: generates hypotheses -> injects `[DEBUG]` logs -> user repr
 Uses Console Ninja MCP for runtime values and Chrome DevTools MCP for browser inspection.
 
 ### design-builder
-Two entry points, each can end with `/build-frontend` or `/generate-prompt`:
+Two entry points:
 - **Full**: URL -> `/extract-copy` -> `copy.yaml` -> `/extract-design` -> `design.json`
 - **Minimal**: Image -> `/extract-design` -> `design.json` (with brief project description)
 
-Then choose:
-- `/build-frontend` (single build)
-- `/build-frontend --variations 3` (multiple variations for comparison)
-- `/generate-prompt` (for Replit/v0/Lovable)
+Then build:
+- `/build-frontend` - React directly
+- `/build-frontend --variants` - 4 HTML previews -> choose -> React
 
-**Design Variations**: Generate 2-3 layout presets (editorial, startup, bold) with different structures but same design tokens. Compare in `preview.html`, then `/select <name>` to choose.
-
-Outputs go to `./prompts/` directory (or `./outputs/` for variations).
+**Design Variants**: Generate 4 layout presets (minimal, editorial, startup, bold) as HTML+CSS previews. Compare at http://localhost:8080, then tell Claude which to use (e.g., "use editorial") and it builds the React app.
 
 ### git-helpers
 Workflow: `/code-review` -> `/commit` -> `/details` -> `/create-pr`

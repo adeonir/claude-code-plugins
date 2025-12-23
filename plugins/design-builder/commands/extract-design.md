@@ -22,7 +22,7 @@ The design-extractor will:
 2. Check for existing copy.yaml for project context (optional)
 3. If no copy.yaml, ask user for brief project description
 4. Extract colors, typography, spacing, components
-5. Generate design.json in ./prompts/
+5. Generate design.json in ./docs/
 
 Wait for the agent to complete and inform the user of the result.
 

@@ -32,7 +32,7 @@ If no copy.yaml exists, ask the user for a brief project description (type, purp
 ## Process
 
 1. **Check for copy.yaml** (optional context)
-   - Look in `./prompts/copy.yaml`
+   - Look in `./docs/copy.yaml`
    - If not found, ask user for brief project description
 
 2. **Get reference images**
@@ -426,6 +426,6 @@ If user provides multiple images with different styles:
 
 ## Output Location
 
-Save to: `./prompts/design.json`
+Save to: `./docs/design.json`
 
 Same folder as the copy.yaml file.

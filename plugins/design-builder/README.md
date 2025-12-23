@@ -1,6 +1,6 @@
 # Design Builder
 
-Claude Code plugin that extracts copy and design from references to build frontend components or generate prompts for AI tools.
+Claude Code plugin that extracts copy and design from references to build frontend components.
 
 > **Part of [claude-code-plugins](https://github.com/adeonir/claude-code-plugins)** - A curated marketplace of Claude Code plugins for feature development, debugging, frontend generation, and git helpers.
 
@@ -8,11 +8,10 @@ Claude Code plugin that extracts copy and design from references to build fronte
 
 - Extract content structure from URLs (optional)
 - Extract design tokens from reference images (screenshots, mockups)
-- Build frontend components directly with Claude Code
-- Generate optimized prompts for Replit, v0, Lovable, Figma
+- Build React components directly with Claude Code
 - Auto-scaffold Vite projects when needed
 - Auto-loaded skill to avoid generic "AI slop" aesthetics
-- Generate multiple design variations for comparison
+- Generate 4 HTML+CSS preview variants before building React
 
 ## Installation
 
@@ -41,7 +40,7 @@ This command automatically:
 
 ## Workflows
 
-Two entry points, each can end with `/build-frontend` or `/generate-prompt`:
+Two entry points:
 
 ```
 # Full: Start from URL reference
@@ -50,10 +49,9 @@ URL -> /extract-copy -> copy.yaml -> /extract-design -> design.json
 # Minimal: Start from design image only (with brief project description)
 Image -> /extract-design -> design.json
 
-# Then choose output:
--> /build-frontend              # Single build
--> /build-frontend --variations # Multiple variations
--> /generate-prompt             # For Replit/v0/Lovable
+# Then build:
+-> /build-frontend              # React directly
+-> /build-frontend --variants   # 4 HTML previews -> choose -> React
 ```
 
 ## Commands
@@ -62,9 +60,8 @@ Image -> /extract-design -> design.json
 |---------|-------------|
 | `/extract-copy` | Extract content from URL to copy.yaml (optional) |
 | `/extract-design` | Extract design from images to design.json |
-| `/generate-prompt` | Generate prompt for target platform |
-| `/build-frontend` | Build frontend in ./src/ (or `--variations N` for comparison) |
-| `/select` | Select a variation after comparison |
+| `/build-frontend` | Build React directly in ./src/ |
+| `/build-frontend --variants` | Generate 4 HTML previews, then build React from chosen variant |
 
 ## Agents
 
@@ -72,9 +69,8 @@ Image -> /extract-design -> design.json
 |-------|------|
 | `copy-extractor` | Content Strategist - extracts content from URLs |
 | `design-extractor` | Creative Director - extracts design from images |
-| `prompt-generator` | Prompt Engineer - generates platform-specific prompts |
-| `frontend-builder` | Frontend Engineer - builds components |
-| `variations-builder` | Variations Engineer - generates multiple layouts |
+| `frontend-builder` | Frontend Engineer - builds React (from variant or direct) |
+| `variants-builder` | Variants Engineer - generates 4 HTML+CSS previews |
 
 ## Skills
 
@@ -82,36 +78,33 @@ Image -> /extract-design -> design.json
 |-------|-------------|
 | `frontend-design` | Distinctive design principles that avoid generic AI aesthetics |
 
-## Design Variations
+## Design Variants
 
-Generate 2-3 layout variations to compare before choosing:
+Generate 4 HTML+CSS previews to compare before building React:
 
 ```bash
-/build-frontend --variations 3
+/build-frontend --variants
 ```
 
 This generates:
 ```
 ./outputs/
-  editorial/   # Split hero, generous spacing, flat cards
-  startup/     # Centered hero, balanced, shadow cards
-  bold/        # Fullscreen hero, compact, bordered cards
-  preview.html # Side-by-side comparison
+  minimal/index.html    # Text hero, extra whitespace, no cards
+  editorial/index.html  # Split hero, generous spacing, flat cards
+  startup/index.html    # Centered hero, balanced, shadow cards
+  bold/index.html       # Fullscreen hero, compact, bordered cards
+  index.html            # Side-by-side comparison
 ```
 
-Then select your preferred variation:
+Then opens http://localhost:8080 for comparison. Tell Claude which variant you prefer (e.g., "use editorial") and it builds the React application.
 
-```bash
-/select editorial
-# Copies to ./src/ (outputs/ preserved as backup)
-```
-
-### Variation Presets
+### Variant Presets
 
 Each preset applies design guidelines (60-30-10 color rule, visual hierarchy, rhythm):
 
 | Preset | Style | Hero | Spacing | Cards |
 |--------|-------|------|---------|-------|
+| `minimal` | Ultra clean | Text only, no image | Extra generous | None |
 | `editorial` | Magazine feel | Split 50/50, image left | Generous | Flat, no shadow |
 | `startup` | SaaS modern | Centered, prominent CTA | Balanced | Soft shadows |
 | `bold` | High impact | Fullscreen, text over image | Compact | Strong borders |
@@ -125,15 +118,6 @@ Each preset applies design guidelines (60-30-10 color rule, visual hierarchy, rh
 | `webapp` | Dashboard, SaaS, admin panel |
 | `app` | iOS/Android, PWA |
 
-## Prompt Targets
-
-| Target | Best For |
-|--------|----------|
-| `replit` | Full landing pages with images |
-| `v0` | Quick React/shadcn components |
-| `lovable` | Apps with Supabase backend |
-| `figma` | Design system documentation |
-
 ## Usage
 
 ### Full Workflow
@@ -146,10 +130,8 @@ Each preset applies design guidelines (60-30-10 color rule, visual hierarchy, rh
 /extract-design
 # Then paste reference images
 
-# 3. Build or generate prompt
+# 3. Build frontend
 /build-frontend
-# OR
-/generate-prompt --target=replit
 ```
 
 ### Minimal Workflow (design only)
@@ -163,19 +145,21 @@ Each preset applies design guidelines (60-30-10 color rule, visual hierarchy, rh
 /build-frontend
 ```
 
-### Variations Workflow
+### Variants Workflow
 
 ```bash
 # 1. Extract design (same as before)
 /extract-design
 
-# 2. Generate variations
-/build-frontend --variations 3
+# 2. Generate 4 HTML previews
+/build-frontend --variants
 
-# 3. Open outputs/preview.html to compare
+# 3. Compare at http://localhost:8080
 
-# 4. Select preferred variation
-/select startup
+# 4. Tell Claude which variant you want
+# "use editorial"
+
+# 5. React application is built based on that layout
 ```
 
 ## Credits

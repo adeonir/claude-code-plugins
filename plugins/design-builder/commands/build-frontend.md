@@ -1,6 +1,6 @@
 ---
 description: Build frontend components from design tokens
-argument-hint: [--variations N]
+argument-hint: [--variants]
 ---
 
 # Build Frontend Command
@@ -9,30 +9,29 @@ Build production-grade frontend components using Claude Code.
 
 ## Arguments
 
-- `--variations N` - Generate N layout variations (2-3) for comparison
+- `--variants` - Generate 4 HTML+CSS preview variants for comparison before building React
 
 Arguments received: $ARGUMENTS
 
 ## Process
 
-### If --variations is present
+### If --variants is present
 
-Invoke the `variations-builder` subagent to generate multiple design variations.
+Invoke the `variants-builder` subagent to generate 4 HTML+CSS preview variants.
 
-The variations-builder will:
+The variants-builder will:
 1. Load the frontend-design skill first
 2. Locate design.json (required) and copy.yaml (optional)
-3. Determine variation count (default 3, max 3)
-4. Detect existing project stack
-5. Generate each preset (editorial, startup, bold) in ./outputs/
-6. Create preview.html dynamically for side-by-side comparison
-7. Inform user to open outputs/preview.html
+3. Generate all 4 presets (minimal, editorial, startup, bold) in ./outputs/
+4. Create index.html for side-by-side comparison
+5. Run `npx http-server ./outputs -o -p 8080`
+6. Inform user to open http://localhost:8080
 
-After comparison, user can run `/select <variation-name>` to copy chosen variation to ./src/.
+After comparison, user tells Claude which variant to use (e.g., "use editorial") and the frontend-builder will create the React application based on that layout.
 
-### If --variations is NOT present
+### If --variants is NOT present
 
-Invoke the `frontend-builder` subagent to build a single frontend.
+Invoke the `frontend-builder` subagent to build React directly.
 
 The frontend-builder will:
 1. Detect existing project stack (React, Vue, Svelte, etc.)
@@ -48,4 +47,3 @@ Wait for the agent to complete and inform the user of the result.
 
 - **No design.json found**: Run /extract-design first to extract design tokens
 - **Scaffold failed**: Check package manager is installed and available
-- **Variations > 3**: Maximum 3 variations supported. Generating 3 variations

@@ -18,7 +18,7 @@ Add this marketplace to Claude Code:
 |--------|-------------|---------|
 | [spec-driven](./plugins/spec-driven) | Specification-driven development workflow with persistent artifacts | 1.2.0 |
 | [debug-tools](./plugins/debug-tools) | Debugging with code analysis and targeted log injection | 1.2.1 |
-| [design-builder](./plugins/design-builder) | Extract copy and design to build components or generate prompts for AI tools | 2.0.1 |
+| [design-builder](./plugins/design-builder) | Extract copy and design to build frontend components | 3.0.0 |
 | [git-helpers](./plugins/git-helpers) | Git workflow commands (commit, PR, code review) | 1.1.1 |
 
 ### Installing a Plugin
