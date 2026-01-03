@@ -1,9 +1,21 @@
 {
   "name": "git-helpers",
-  "version": "1.1.1",
-  "description": "Git workflow helper commands",
-  "commands": ["./commands/code-review.md", "./commands/commit.md", "./commands/details.md", "./commands/create-pr.md"],
+  "version": "1.2.0",
+  "description": "Git workflow commands with confidence-scored code review",
+  "author": {
+    "name": "Adeonir Kohl"
+  },
+  "repository": "https://github.com/adeonir/claude-code-extras",
+  "license": "MIT",
+  "keywords": ["git", "workflow", "commit", "pr", "code-review", "guidelines"],
+  "commands": [
+    "./commands/code-review.md",
+    "./commands/commit.md",
+    "./commands/details.md",
+    "./commands/push-pr.md"
+  ],
   "agents": [
-    "./agents/code-reviewer.md"
+    "./agents/code-reviewer.md",
+    "./agents/guidelines-auditor.md"
   ]
 }

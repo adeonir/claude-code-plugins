@@ -29,9 +29,9 @@
     {
       "name": "git-helpers",
       "source": "./plugins/git-helpers",
-      "description": "Git workflow commands for commits, PR descriptions, and code reviews with auto-generated messages based on actual diffs",
-      "version": "1.1.1",
-      "keywords": ["git", "workflow", "commit", "pr", "code-review"]
+      "description": "Git workflow commands with confidence-scored code review",
+      "version": "1.2.0",
+      "keywords": ["git", "workflow", "commit", "pr", "code-review", "guidelines"]
     }
   ]
 }

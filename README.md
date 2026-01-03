@@ -19,7 +19,7 @@ Add this marketplace to Claude Code:
 | [spec-driven](./plugins/spec-driven) | Specification-driven development with feature IDs, validation, and archive workflow | 2.0.0 |
 | [debug-tools](./plugins/debug-tools) | Iterative debugging workflow with confidence scoring and runtime analysis | 1.3.0 |
 | [design-builder](./plugins/design-builder) | Extract copy and design to build frontend components | 3.0.0 |
-| [git-helpers](./plugins/git-helpers) | Git workflow commands (commit, PR, code review) | 1.1.1 |
+| [git-helpers](./plugins/git-helpers) | Git workflow commands with confidence-scored code review | 1.2.0 |
 
 ### Installing a Plugin
 

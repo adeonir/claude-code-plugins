@@ -2,6 +2,24 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v1.2.0 (2026-01-03)
+
+### Added
+- Confidence scoring (0-100) for code review findings
+- `guidelines-auditor` agent for CLAUDE.md compliance checking
+- `--comment` flag to post review as PR comment via gh cli
+- Command prefixes (`/git-helpers:*`) for consistency
+- Mermaid workflow diagram in documentation
+
+### Changed
+- Rename `/create-pr` to `/push-pr` (more descriptive)
+- Code review now outputs to terminal first, asks to save
+- Output format includes confidence score per issue: `[score] [file:line]`
+- Only report issues with >= 80 confidence
+
+### Fixed
+- README.md URL references (claude-code-plugins -> claude-code-extras)
+
 ## v1.1.1 (2025-12-14)
 
 ### Fixed

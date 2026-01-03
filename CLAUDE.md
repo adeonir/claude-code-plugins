@@ -35,8 +35,8 @@ plugins/
 │
 └── git-helpers/              # Git workflow plugin
     ├── .claude-plugin/plugin.json
-    ├── agents/               # Subagents (code-reviewer)
-    └── commands/             # Slash commands (/code-review, /commit, /details, /create-pr)
+    ├── agents/               # Subagents (code-reviewer, guidelines-auditor)
+    └── commands/             # Slash commands (/code-review, /commit, /details, /push-pr)
 ```
 
 ## Plugin Structure
@@ -76,9 +76,9 @@ Then build:
 **Design Variants**: Generate 4 layout presets (minimal, editorial, startup, bold) as HTML+CSS previews. Compare at http://localhost:8080, then tell Claude which to use (e.g., "use editorial") and it builds the React app.
 
 ### git-helpers
-Workflow: `/code-review` -> `/commit` -> `/details` -> `/create-pr`
+Workflow: `/git-helpers:code-review` -> `/git-helpers:commit` -> `/git-helpers:details` -> `/git-helpers:push-pr`
 
-Commands analyze actual git diffs, not conversation context. Commit message format: `type: concise description` where type is one of: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`.
+Confidence-scored code review (>= 80 threshold) with CLAUDE.md compliance checking. Commands analyze actual git diffs, not conversation context. Commit message format: `type: concise description`.
 
 ## Writing New Plugins
 

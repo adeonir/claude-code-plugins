@@ -1,12 +1,12 @@
 ---
-description: Create PR with generated title and description
-argument-hint: [base-branch]
-allowed-tools: Bash(git:*), Bash(gh:*), Bash(which gh)
+name: push-pr
+description: Push branch and create PR with generated details
+argument-hint: "[base-branch]"
 ---
 
-# Create PR Command
+# Push PR Command
 
-Generate PR details and create the Pull Request directly via `gh` cli.
+Push current branch and create Pull Request via `gh` cli.
 
 ## Arguments
 
@@ -19,7 +19,7 @@ Generate PR details and create the Pull Request directly via `gh` cli.
    ```bash
    which gh
    ```
-   If not available, stop and inform user to install `gh` cli or use `/details` instead.
+   If not available, stop and inform user to install `gh` cli or use `/git-helpers:details` instead.
 
 2. **Detect base branch** (if not specified):
    ```bash

@@ -1,7 +1,7 @@
 ---
+name: commit
 description: Create commits with well-formatted messages
-argument-hint: [-s|--staged]
-allowed-tools: Bash(git:*)
+argument-hint: "[-s|--staged]"
 ---
 
 # Commit Command

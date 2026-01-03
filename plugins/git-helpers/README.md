@@ -2,29 +2,29 @@
 
 Git workflow helper commands for Claude Code.
 
-> **Part of [claude-code-plugins](https://github.com/adeonir/claude-code-plugins)** - A curated marketplace of Claude Code plugins for feature development, debugging, frontend generation, and git helpers.
+> **Part of [claude-code-extras](https://github.com/adeonir/claude-code-extras)** - A curated marketplace of Claude Code plugins for feature development, debugging, frontend generation, and git helpers.
 
 ## Features
 
-- Code review with quality analysis and confidence-based filtering
+- Confidence-scored code review (only reports >= 80 confidence)
+- CLAUDE.md compliance checking
 - Auto-generated commit messages from actual diffs
 - Structured PR descriptions with impact assessment
 - Direct PR creation via GitHub CLI
-- Supports uncommitted changes and branch comparisons
 
 ## Installation
 
 ### Prerequisites
 
 - [Claude Code](https://claude.ai/code) - Anthropic's official CLI for Claude
-- [gh](https://cli.github.com/) - GitHub CLI (required for `/create-pr` command)
+- [gh](https://cli.github.com/) - GitHub CLI (required for `/push-pr` and `--comment`)
 
 ### Add Marketplace
 
 First, add the marketplace to Claude Code (only needed once):
 
 ```bash
-/plugin marketplace add adeonir/claude-code-plugins
+/plugin marketplace add adeonir/claude-code-extras
 ```
 
 ### Install Plugin
@@ -33,59 +33,47 @@ First, add the marketplace to Claude Code (only needed once):
 /plugin install git-helpers
 ```
 
-This command automatically:
-- Downloads the plugin from the marketplace
-- Makes all git workflow commands available in your Claude Code session
-
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/code-review` | Review code changes for issues |
-| `/commit` | Create commits with well-formatted messages |
-| `/commit -s` | Commit only staged files |
-| `/details` | Generate PR title and description to file |
-| `/create-pr` | Create PR with generated details |
+| `/git-helpers:code-review` | Review changes with confidence scoring |
+| `/git-helpers:commit` | Create commit with auto-generated message |
+| `/git-helpers:details` | Generate PR description to file |
+| `/git-helpers:push-pr` | Push branch and create PR |
 
 ## Workflow
 
+```mermaid
+flowchart LR
+    review["/code-review"] --> commit["/commit"]
+    commit --> details["/details"]
+    details --> push["/push-pr"]
 ```
-/code-review (optional) --> /commit --> /details --> /create-pr
-         |                      |           |            |
-         v                      v           v            v
-CODE_REVIEW.md              commit    PR_DETAILS.md  PR created
-```
-
-## Agents
-
-| Agent | Description |
-|-------|-------------|
-| `code-reviewer` | Senior code reviewer for quality analysis |
 
 ## Usage
 
 ### /code-review
 
-Review code changes using the `code-reviewer` agent.
+Review code changes using specialized agents.
 
 ```bash
-/code-review          # Review uncommitted changes, or branch diff if clean
-/code-review main     # Compare against main branch
+/git-helpers:code-review              # Terminal, ask to save
+/git-helpers:code-review main         # Compare against main
+/git-helpers:code-review --comment    # Post to PR via gh
 ```
 
-**Output:** `CODE_REVIEW.md` with issues, suggestions, and summary.
-
-**Modes:**
-- Uncommitted changes: reviews staged + unstaged files
-- Branch comparison: compares against base branch (when no local changes)
+**Agents:**
+- `code-reviewer`: Bug detection, security, performance
+- `guidelines-auditor`: CLAUDE.md compliance checking
 
 ### /commit
 
 Create a commit with an auto-generated message based on the actual diff.
 
 ```bash
-/commit           # Stage all files and commit
-/commit -s        # Commit only staged files
+/git-helpers:commit           # Stage all files and commit
+/git-helpers:commit -s        # Commit only staged files
 ```
 
 **Message format:** `type: concise description`
@@ -97,31 +85,59 @@ Create a commit with an auto-generated message based on the actual diff.
 Generate PR title and description and save to file.
 
 ```bash
-/details          # Auto-detect base branch
-/details main     # Use main as base
+/git-helpers:details          # Auto-detect base branch
+/git-helpers:details main     # Use main as base
 ```
 
 **Output:** `PR_DETAILS.md`
 
-### /create-pr
+### /push-pr
 
-Generate PR details and create the Pull Request directly.
+Push branch and create Pull Request via gh cli.
 
 ```bash
-/create-pr          # Auto-detect base branch
-/create-pr main     # Use main as base
+/git-helpers:push-pr          # Auto-detect base branch
+/git-helpers:push-pr main     # Use main as base
 ```
 
 **Requires:** `gh` cli installed and authenticated.
 
 **Output:** PR created, returns PR URL.
 
+## Confidence Scoring
+
+| Score | Meaning | Action |
+|-------|---------|--------|
+| >= 80 | High confidence | Report as issue |
+| 50-79 | Medium confidence | Investigate more |
+| < 50 | Low confidence | Do not report |
+
+Only issues with >= 80 confidence are reported, reducing false positives.
+
+## Output Format
+
+```markdown
+## Issues
+
+- **[95] [src/api.ts:42]** SQL injection vulnerability
+  - User input concatenated directly into query
+
+## CLAUDE.md Compliance
+
+- **[88] [src/utils.ts:15]** Naming convention violation
+  - Guideline: "Always use descriptive variable names"
+
+## Summary
+
+12 files | 2 issues | 1 compliance finding
+```
+
 ## Key Principles
 
 - Analyzes actual file changes, not conversation context
 - Messages reflect current implementation state
+- Conservative review: only high-confidence issues
 - Concise, actionable output
-- No unnecessary sections or verbose templates
 
 ## License
 

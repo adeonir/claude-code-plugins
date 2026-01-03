@@ -4,107 +4,104 @@ Git workflow helper commands for Claude Code.
 
 ## Workflow
 
-```
-/code-review (optional) --> /commit --> /details --> /create-pr
-         |                      |           |            |
-         v                      v           v            v
-   CODE_REVIEW.md            commit    PR_DETAILS.md  PR created
+```mermaid
+flowchart LR
+    review["/code-review"] --> commit["/commit"]
+    commit --> details["/details"]
+    details --> push["/push-pr"]
+
+    review -->|optional| save["CODE_REVIEW.md"]
+    details --> file["PR_DETAILS.md"]
+    push --> pr["PR created"]
 ```
 
 ## Commands
 
+| Command | Description |
+|---------|-------------|
+| `/git-helpers:code-review` | Review changes with confidence scoring |
+| `/git-helpers:commit` | Create commit with auto-generated message |
+| `/git-helpers:details` | Generate PR description to file |
+| `/git-helpers:push-pr` | Push branch and create PR |
+
 ### /code-review
 
-Review code changes using the `code-reviewer` agent.
+Review code changes using `code-reviewer` and `guidelines-auditor` agents.
 
-**Usage:**
 ```bash
-/code-review          # Review uncommitted changes, or branch diff if clean
-/code-review main     # Compare against main branch
+/git-helpers:code-review              # Terminal, ask to save
+/git-helpers:code-review main         # Compare against main
+/git-helpers:code-review --comment    # Post to PR via gh
 ```
 
-**Output:** `CODE_REVIEW.md`
-
-**Key behavior:**
-- Analyzes the actual diff, not conversation context
-- Focus: bugs, security, performance, maintainability
-- Supports uncommitted changes (staged + unstaged) when on main with local modifications
-- Falls back to branch comparison when working directory is clean
+**Output modes:**
+- Terminal (default): Shows review, asks to save to CODE_REVIEW.md
+- PR comment (`--comment`): Posts review as PR comment via gh cli
 
 ### /commit
 
 Create commits with well-formatted messages based on actual file changes.
 
-**Usage:**
 ```bash
-/commit           # Stage all files and commit
-/commit -s        # Commit only staged files
+/git-helpers:commit           # Stage all files and commit
+/git-helpers:commit -s        # Commit only staged files
 ```
 
 **Message format:** `type: concise description`
 
-**Key behavior:**
-- Analyzes the actual diff, not conversation context
-- Handles pre-commit hooks with automatic amend
-
 ### /details
 
-Generate comprehensive PR description with structured analysis.
+Generate PR title and description to `PR_DETAILS.md`.
 
-**Usage:**
 ```bash
-/details              # Auto-detect base branch
-/details development  # Use development as base
+/git-helpers:details          # Auto-detect base branch
+/git-helpers:details main     # Use main as base
 ```
 
-**Output:** `PR_DETAILS.md`
+### /push-pr
 
-**Key behavior:**
-- Analyzes commits and diff, not conversation context
-- Categorizes files: Core, API, State, UI, Config, Docs
-- Includes Technical Flow, Impact Assessment, Priority Review Areas
-- Provides Testing Instructions
+Push branch and create Pull Request via gh cli.
 
-### /create-pr
-
-Generate PR details and create the Pull Request directly.
-
-**Usage:**
 ```bash
-/create-pr          # Auto-detect base branch
-/create-pr main     # Use main as base
+/git-helpers:push-pr          # Auto-detect base branch
+/git-helpers:push-pr main     # Use main as base
 ```
 
 **Requires:** `gh` cli
 
-**Output:** PR created, returns PR URL
-
-**Key behavior:**
-- Analyzes commits and diff, not conversation context
-- Creates PR via `gh pr create`
-
 ## Agents
 
-### code-reviewer
+| Agent | Role |
+|-------|------|
+| `code-reviewer` | Bug detection, security, performance (>= 80 confidence) |
+| `guidelines-auditor` | CLAUDE.md compliance checking (>= 80 confidence) |
 
-Senior code reviewer for quality analysis. Invoked by `/code-review`.
+## Confidence Scoring
 
-**Focus:** bugs, security, performance, maintainability
+| Score | Meaning | Action |
+|-------|---------|--------|
+| >= 80 | High confidence | Report as issue |
+| 50-79 | Medium confidence | Investigate more |
+| < 50 | Low confidence | Do not report |
 
-**Output format:**
+## Output Format
+
 ```markdown
 ## Issues
-- **[file:line]** Problem description
-  - Suggested fix
 
-## Suggestions
-- **[file:line]** Improvement description
-  - How to improve
+- **[{score}] [{file}:{line}]** Issue description
+  - Why and how to fix
+
+## CLAUDE.md Compliance
+
+- **[{score}] [{file}:{line}]** Guideline violation
+  - Which guideline and how to fix
 
 ## Summary
-X files | Y issues | Z suggestions
+
+X files | Y issues | Z compliance findings
 ```
 
-## Types
+## Commit Types
 
 `feat`, `fix`, `refactor`, `chore`, `docs`, `test`

@@ -1,7 +1,7 @@
 ---
+name: details
 description: Generate PR title and description to file
-argument-hint: [base-branch]
-allowed-tools: Bash(git:*), Read, Write
+argument-hint: "[base-branch]"
 ---
 
 # PR Details Command
