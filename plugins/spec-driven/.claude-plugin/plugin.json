@@ -1,6 +1,6 @@
 {
   "name": "spec-driven",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Specification-driven development workflow with persistent artifacts for planning, task management, and implementation",
   "author": {
     "name": "Adeonir Kohl"
@@ -9,12 +9,14 @@
   "license": "MIT",
   "keywords": ["spec", "specification", "planning", "tasks", "implementation", "workflow"],
   "commands": [
-    "./commands/spec.md",
+    "./commands/init.md",
     "./commands/clarify.md",
     "./commands/plan.md",
     "./commands/tasks.md",
     "./commands/implement.md",
-    "./commands/review.md"
+    "./commands/validate.md",
+    "./commands/archive.md",
+    "./commands/specs.md"
   ],
   "agents": [
     "./agents/web-researcher.md",
@@ -22,6 +24,7 @@
     "./agents/code-architect.md",
     "./agents/task-generator.md",
     "./agents/implement-agent.md",
-    "./agents/code-reviewer.md"
+    "./agents/spec-validator.md",
+    "./agents/spec-archiver.md"
   ]
 }

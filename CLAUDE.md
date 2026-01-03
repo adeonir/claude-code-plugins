@@ -16,9 +16,8 @@ plugins/
 ├── spec-driven/              # Specification-driven workflow
 │   ├── .claude-plugin/plugin.json
 │   ├── .mcp.json             # Serena MCP
-│   ├── agents/               # Subagents (web-researcher, code-explorer, code-architect, etc.)
-│   ├── commands/             # Slash commands (/spec, /plan, /tasks, etc.)
-│   └── templates/            # Artifact templates
+│   ├── agents/               # Subagents (web-researcher, code-explorer, code-architect, spec-validator, etc.)
+│   └── commands/             # Slash commands (/init, /plan, /tasks, /validate, /archive, etc.)
 │
 ├── debug-tools/              # Debugging workflow plugin
 │   ├── .claude-plugin/plugin.json
@@ -52,11 +51,11 @@ Each plugin follows this structure:
 
 ### spec-driven
 Specification-driven development workflow:
-`/spec` -> `/clarify` -> `/plan` -> `/tasks` -> `/implement` -> `/review`
+`/init` -> `/clarify` -> `/plan` -> `/tasks` -> `/implement` -> `/validate` -> `/archive`
 
-The `/plan` command automatically invokes `web-researcher` agent when the spec mentions external technologies or when the user provides additional research instructions.
+Features organized by sequential ID (`001-user-auth/`, `002-add-2fa/`) with optional branch association. The `/plan` command checks `docs/research/` for existing research before invoking `web-researcher` agent.
 
-Artifacts persisted in `.specs/{branch}/` (spec.md, research.md, plan.md, tasks.md).
+Artifacts persisted in `.specs/{ID}-{feature}/` (spec.md, plan.md, tasks.md). Research shared in `docs/research/`. Documentation generated to `docs/features/` via `/archive`.
 
 ### debug-tools
 Iterative debugging workflow: `/debug "bug description"`

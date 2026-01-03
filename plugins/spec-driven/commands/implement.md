@@ -1,6 +1,6 @@
 ---
 description: Execute implementation tasks
-argument-hint: [T001 | T001-T005 | --all]
+argument-hint: [ID] [T001 | T001-T005 | --all]
 ---
 
 # Implement Command
@@ -11,6 +11,7 @@ Execute tasks from the task list, respecting dependencies and updating progress.
 
 | Input | Action |
 |-------|--------|
+| `[ID]` | Feature ID (optional if branch is associated) |
 | (empty) | Next pending task |
 | `T001` | Single task |
 | `T001-T005` | Range of tasks |
@@ -20,52 +21,65 @@ Arguments received: $ARGUMENTS
 
 ## Process
 
-### Step 1: Load Context
+### Step 1: Resolve Feature
 
-Get current branch:
-```bash
-git branch --show-current
-```
+Parse arguments to extract:
+- Feature ID (if provided as first numeric arg or `XXX-name` format)
+- Task scope (T001, T001-T005, --all, or empty)
 
-Read:
-- `.specs/{branch}/spec.md` - Requirements (extract Acceptance Criteria section)
-- `.specs/{branch}/plan.md` - Technical decisions and Critical Files
-- `.specs/{branch}/research.md` - External research (if exists, extract key findings summary)
-- `.specs/{branch}/tasks.md` - Task list and progress
+If no ID:
+- Get current git branch
+- Search `.specs/*/spec.md` for matching `branch:` in frontmatter
+- If found, use that feature
+- If not found:
+  - If only one feature exists, use it
+  - If multiple, list them and ask user to specify
+
+### Step 2: Load Context
+
+Read from `.specs/{ID}-{feature}/`:
+- `spec.md` - Requirements (extract Acceptance Criteria section)
+- `plan.md` - Technical decisions and Critical Files
+- `tasks.md` - Task list and progress
+
+Check `docs/research/` for any referenced research files.
 
 If plan.md or tasks.md don't exist, inform user to run `/spec-driven:plan` and `/spec-driven:tasks` first.
 
-### Step 1.5: Load Critical Files
+### Step 3: Update Status
+
+If status is `planning` or `draft`:
+- Update spec.md frontmatter to `status: in-progress`
+
+### Step 4: Load Critical Files
 
 From plan.md, identify the `## Critical Files` section.
 
 For the tasks about to execute:
 - Read the **Reference Files** relevant to current tasks (max 5 files)
-- These provide patterns and conventions to follow during implementation
+- These provide patterns and conventions to follow
 
-This ensures the implement-agent has concrete examples to follow.
-
-### Step 2: Parse Scope
+### Step 5: Parse Scope
 
 Determine which tasks to execute based on arguments.
 
-### Step 3: Validate Dependencies
+### Step 6: Validate Dependencies
 
 For each task to execute:
 - If marked `[P]`, can proceed
 - If marked `[B:Txxx]`, check if Txxx is completed
 - Skip blocked tasks, inform user
 
-### Step 4: Execute Tasks
+### Step 7: Execute Tasks
 
 Invoke the `implement-agent` with:
 - Task scope
-- **Specification** (spec.md - Acceptance Criteria section)
-- Technical plan (plan.md)
-- **Research findings** (research.md summary, if exists)
-- Current task list (tasks.md)
-- **Reference file contents** (patterns to follow for current tasks)
-- Current branch name
+- Specification (Acceptance Criteria section)
+- Technical plan
+- Research summary (if exists)
+- Current task list
+- Reference file contents
+- Feature ID and name
 
 The agent will:
 - Implement each task following the plan
@@ -74,17 +88,27 @@ The agent will:
 - Update tasks.md with checkboxes
 - Suggest atomic commits
 
-### Step 5: Report
+### Step 8: Check Completion
+
+After execution, check if ALL tasks are completed.
+
+If all tasks done:
+- Update spec.md frontmatter to `status: review`
+- Inform user that implementation is complete
+
+### Step 9: Report
 
 After execution:
 - Show tasks completed
 - Show files created/modified
-- Show remaining tasks
+- Show remaining tasks (if any)
 - Suggest commit message
-- Next steps: continue with `/spec-driven:implement` or `/spec-driven:review` when done
+- If all done: suggest `/spec-driven:validate` for final review
+- If tasks remain: suggest continuing with `/spec-driven:implement`
 
 ## Error Handling
 
+- **Feature not found**: List available features or suggest `/spec-driven:init`
 - **Plan/tasks not found**: Inform user to run previous commands
 - **Dependency blocked**: List which tasks need to complete first
 - **Implementation error**: Report issue, keep task unchecked

@@ -2,6 +2,37 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v2.0.0 (2026-01-03)
+
+### Added
+- Feature organization by sequential ID (`001-user-auth/`, `002-add-2fa/`)
+- Optional branch association for automatic feature detection
+- `/init` command (renamed from `/spec`) with `--link` flag for branch association
+- `/validate` command (renamed from `/review`) with three-level validation
+- `/archive` command for documentation generation
+- `/specs` command to list all features by status
+- `spec-validator` agent with artifact, consistency, and code validation
+- `spec-archiver` agent for documentation generation
+- Shared research in `docs/research/` for cross-feature reuse
+- Feature documentation output to `docs/features/` with changelog
+- Frontmatter metadata in spec.md (id, feature, status, branch, created)
+
+### Changed
+- Renamed `/spec` to `/init`
+- Renamed `/review` to `/validate`
+- Renamed `code-reviewer` agent to `spec-validator`
+- Artifacts now in `.specs/{ID}-{feature}/` instead of `.specs/{branch}/`
+- Research output to `docs/research/{topic}.md` (shared, committed)
+- `/implement` auto-marks as `review` when all tasks complete
+- `/validate` auto-marks as `done` if all checks pass
+- All commands support optional `[ID]` argument
+- Updated all commands with `/spec-driven:` prefix
+
+### Removed
+- Branch-based artifact organization
+- Feature-specific research.md (now shared in docs/research/)
+- Templates folder (formats defined in agents/commands)
+
 ## v1.2.0 (2025-12-19)
 
 ### Added

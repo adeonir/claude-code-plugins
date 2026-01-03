@@ -2,18 +2,20 @@
 
 Specification-driven development workflow for Claude Code with persistent artifacts.
 
-> **Part of [claude-code-plugins](https://github.com/adeonir/claude-code-plugins)** - A curated marketplace of Claude Code plugins for feature development, debugging, frontend generation, and git helpers.
+> **Part of [claude-code-extras](https://github.com/adeonir/claude-code-extras)** - A curated marketplace of Claude Code plugins for feature development, debugging, frontend generation, and git helpers.
 
 ## Features
 
 - Structured specification creation from descriptions or PRDs
+- **Feature organization by sequential ID** (001-user-auth, 002-add-2fa)
+- **Optional branch association** for automatic feature detection
 - Codebase exploration and pattern analysis
 - Technical planning with decisive architectural choices
-- **Critical files consolidation** (reference patterns, files to modify/create)
+- **Shared research** in docs/research/ for cross-feature reuse
 - Task decomposition with dependency tracking
 - Granular implementation (single task, range, or all)
-- **Context-aware implementation** with spec validation and reference files
-- Confidence-based code review with **acceptance criteria validation**
+- **Three-level validation** (artifacts, consistency, code)
+- **Archive workflow** with documentation generation
 - Semantic code operations via Serena MCP
 
 ## Installation
@@ -28,7 +30,7 @@ Specification-driven development workflow for Claude Code with persistent artifa
 First, add the marketplace to Claude Code (only needed once):
 
 ```bash
-/plugin marketplace add adeonir/claude-code-plugins
+/plugin marketplace add adeonir/claude-code-extras
 ```
 
 ### Install Plugin
@@ -45,50 +47,108 @@ This command automatically:
 ## Quick Start
 
 ```bash
-# 1. Create specification
-claude /spec "Add user authentication with OAuth"
+# 1. Create specification (gets sequential ID)
+/spec-driven:init "Add user authentication with OAuth"
 
 # 2. Resolve any ambiguities
-claude /clarify
+/spec-driven:clarify
 
-# 3. Generate technical plan
-claude /plan
+# 3. Generate technical plan (researches if needed)
+/spec-driven:plan
 
 # 4. Create task list
-claude /tasks
+/spec-driven:tasks
 
 # 5. Implement tasks
-claude /implement             # Next pending task
-claude /implement T001        # Single task
-claude /implement T001-T005   # Range
-claude /implement --all       # All pending
+/spec-driven:implement              # Next pending task
+/spec-driven:implement T001         # Single task
+/spec-driven:implement T001-T005    # Range
+/spec-driven:implement --all        # All pending
 
-# 6. Review and summarize
-claude /review
+# 6. Validate and mark as done
+/spec-driven:validate
+
+# 7. Generate documentation
+/spec-driven:archive
 ```
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/spec <description>` | Create feature specification |
-| `/clarify` | Resolve [NEEDS CLARIFICATION] items |
-| `/plan` | Explore codebase and create technical plan |
-| `/tasks` | Generate task list from plan |
-| `/implement [scope]` | Execute implementation tasks |
-| `/review` | Review code and summarize work |
+| `/spec-driven:init <description>` | Create feature specification with sequential ID |
+| `/spec-driven:init --link ID` | Associate current branch to existing feature |
+| `/spec-driven:clarify [ID]` | Resolve [NEEDS CLARIFICATION] items |
+| `/spec-driven:plan [ID]` | Explore codebase and create technical plan |
+| `/spec-driven:tasks [ID]` | Generate task list from plan |
+| `/spec-driven:implement [ID] [scope]` | Execute implementation tasks |
+| `/spec-driven:validate [ID]` | Validate artifacts, consistency, and code |
+| `/spec-driven:archive [ID]` | Generate documentation and mark as archived |
+| `/spec-driven:specs` | List all features by status |
 
-## Artifacts
+## Feature Organization
 
-All artifacts are stored in `.specs/{branch}/`:
+Features are organized by sequential ID with optional branch association:
 
 ```
 .specs/
-└── feature-auth/
+├── 001-user-auth/
+│   ├── spec.md
+│   ├── plan.md
+│   └── tasks.md
+├── 002-add-2fa/
+│   └── ...
+└── 003-payment-flow/
+    └── ...
+```
+
+Each spec.md has frontmatter metadata:
+
+```yaml
+---
+id: 002
+feature: add-2fa
+status: in-progress
+branch: feat/add-2fa  # optional
+created: 2025-01-03
+---
+```
+
+## Status Lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> draft: /init
+    draft --> planning: /plan
+    planning --> in_progress: /implement
+    in_progress --> review: all tasks done
+    review --> done: /validate passes
+    review --> in_progress: /validate fails
+    done --> archived: /archive
+    archived --> [*]
+```
+
+## Artifacts
+
+### Working Files (.specs/ - gitignored)
+
+```
+.specs/
+└── 002-add-2fa/
     ├── spec.md      # Requirements and acceptance criteria
-    ├── research.md  # External research findings (if needed)
     ├── plan.md      # Technical architecture and critical files
-    └── tasks.md     # Trackable task list with artifact refs
+    └── tasks.md     # Trackable task list with dependencies
+```
+
+### Permanent Files (docs/ - committed)
+
+```
+docs/
+├── research/
+│   ├── totp-authentication.md   # Reusable research
+│   └── stripe-payments.md
+└── features/
+    └── authentication.md        # Generated by /archive
 ```
 
 ## Task Markers
@@ -104,17 +164,31 @@ Tasks use markers to indicate parallelization:
 
 ## Workflow
 
-```
-/spec --> /clarify --> /plan --> /tasks --> /implement --> /review
-  |          |           |          |            |            |
-  v          v           v          v            v            v
-spec.md   spec.md    research.md  tasks.md   code +       AC status
-          (updated)  + plan.md               tasks.md    + summary
+```mermaid
+flowchart TD
+    init["/init"] --> spec["spec.md<br/>(draft)"]
+    spec --> clarify{Ambiguities?}
+    clarify -->|Yes| clarifyCmd["/clarify"] --> spec
+    clarify -->|No| plan["/plan"]
+    plan --> research["docs/research/*.md"]
+    plan --> planmd["plan.md<br/>(planning)"]
+    planmd --> tasks["/tasks"]
+    tasks --> tasksmd["tasks.md"]
+    tasksmd --> implement["/implement"]
+    implement --> code["Code changes"]
+    implement --> review["(review)"]
+    review --> validate["/validate"]
+    validate -->|Pass| done["(done)"]
+    validate -->|Fail| implement
+    done --> archive["/archive"]
+    archive --> docs["docs/features/*.md<br/>(archived)"]
 ```
 
 Each phase reads previous artifacts to maintain context:
+- `/plan` checks docs/research/ for existing research
 - `/implement` reads spec (AC), plan (critical files), and research
-- `/review` validates acceptance criteria and architecture decisions
+- `/validate` validates artifacts, consistency, and acceptance criteria
+- `/archive` generates documentation with changelog
 
 ## Serena MCP Integration
 

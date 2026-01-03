@@ -17,7 +17,7 @@ Convert a technical plan (plan.md) into an actionable task list (tasks.md) with 
 
 You will receive:
 - Technical plan (plan.md) including Critical Files section
-- Current branch name
+- Feature ID and name
 
 ## Process
 
@@ -44,19 +44,19 @@ You will receive:
 
 ## Output
 
-Generate `.specs/{branch}/tasks.md` using the template:
+Generate `.specs/{ID}-{feature}/tasks.md` using the format:
 
 ```markdown
 # Tasks: {feature_name}
 
-Branch: {branch}
+Feature: {ID}-{feature}
 Total: {count} | Completed: 0 | Remaining: {count}
 
 ## Artifacts
 
-- Spec: .specs/{branch}/spec.md
-- Plan: .specs/{branch}/plan.md
-- Research: .specs/{branch}/research.md (if exists)
+- Spec: .specs/{ID}-{feature}/spec.md
+- Plan: .specs/{ID}-{feature}/plan.md
+- Research: docs/research/{topic}.md (if exists)
 
 ## Setup & Dependencies
 - [ ] T001 [P] {task_description with file path}
@@ -105,6 +105,6 @@ Bad task examples:
 
 ## Output Location
 
-Save to: `.specs/{branch}/tasks.md`
+Save to: `.specs/{ID}-{feature}/tasks.md`
 
-Create the `.specs/{branch}/` folder if it doesn't exist.
+The folder is created by `/spec-driven:init`.

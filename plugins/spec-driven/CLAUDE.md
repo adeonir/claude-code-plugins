@@ -15,19 +15,18 @@ spec-driven/
 │   ├── code-architect.md
 │   ├── task-generator.md
 │   ├── implement-agent.md
-│   └── code-reviewer.md
+│   ├── spec-validator.md
+│   └── spec-archiver.md
 ├── commands/
-│   ├── spec.md
+│   ├── init.md
 │   ├── clarify.md
 │   ├── plan.md
 │   ├── tasks.md
 │   ├── implement.md
-│   └── review.md
-├── templates/
-│   ├── spec.md
-│   ├── plan.md
-│   └── tasks.md
-└── .specs/{branch}/
+│   ├── validate.md
+│   ├── archive.md
+│   └── specs.md
+└── .specs/{ID}-{feature}/
     ├── spec.md
     ├── plan.md
     └── tasks.md
@@ -35,54 +34,88 @@ spec-driven/
 
 ## Workflow
 
-```
-/spec "feature description"
-    |
-    +---> .specs/{branch}/spec.md
-    v
-/clarify (if needed)
-    |
-    +---> .specs/{branch}/spec.md (updated)
-    v
-/plan [additional instructions]
-    |
-    +---> .specs/{branch}/research.md (if needed)
-    +---> .specs/{branch}/plan.md
-    v
-/tasks
-    |
-    +---> .specs/{branch}/tasks.md
-    v
-/implement [T001|T001-T005|--all]
-    |
-    +---> code changes + tasks.md updated
-    v
-/review
-    |
-    +---> summary in conversation
+```mermaid
+flowchart TD
+    init["/init"] --> spec["spec.md<br/>(draft)"]
+    spec --> clarify{Ambiguities?}
+    clarify -->|Yes| clarifyCmd["/clarify"] --> spec
+    clarify -->|No| plan["/plan"]
+    plan --> research["docs/research/*.md"]
+    plan --> planmd["plan.md<br/>(planning)"]
+    planmd --> tasks["/tasks"]
+    tasks --> tasksmd["tasks.md"]
+    tasksmd --> implement["/implement"]
+    implement --> code["Code changes"]
+    implement --> review["(review)"]
+    review --> validate["/validate"]
+    validate -->|Pass| done["(done)"]
+    validate -->|Fail| implement
+    done --> archive["/archive"]
+    archive --> docs["docs/features/*.md<br/>(archived)"]
 ```
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/spec` | Create specification from description or PRD |
-| `/clarify` | Resolve ambiguities marked [NEEDS CLARIFICATION] |
-| `/plan` | Research (if needed), explore codebase, and generate technical plan |
-| `/tasks` | Generate task list from plan |
-| `/implement` | Execute next task, or specify scope (T001, T001-T005, --all) |
-| `/review` | Review code and summarize work |
+| `/spec-driven:init` | Create specification with sequential ID |
+| `/spec-driven:init --link ID` | Associate current branch to existing feature |
+| `/spec-driven:clarify [ID]` | Resolve ambiguities marked [NEEDS CLARIFICATION] |
+| `/spec-driven:plan [ID]` | Research (if needed), explore codebase, generate technical plan |
+| `/spec-driven:tasks [ID]` | Generate task list from plan |
+| `/spec-driven:implement [ID] [scope]` | Execute next task, or specify scope (T001, T001-T005, --all) |
+| `/spec-driven:validate [ID]` | Validate artifacts, consistency, and code |
+| `/spec-driven:archive [ID]` | Generate documentation and mark as archived |
+| `/spec-driven:specs` | List all features by status |
+
+## Feature Organization
+
+Features are organized by sequential ID:
+
+```
+.specs/
+├── 001-user-auth/
+├── 002-add-2fa/
+└── 003-payment-flow/
+```
+
+Each spec.md has frontmatter metadata:
+
+```yaml
+---
+id: 002
+feature: add-2fa
+status: draft | planning | in-progress | review | done | archived
+branch: feat/add-2fa  # optional
+created: 2025-01-03
+---
+```
+
+## Status Lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> draft: /init
+    draft --> planning: /plan
+    planning --> in_progress: /implement
+    in_progress --> review: all tasks done
+    review --> done: /validate passes
+    review --> in_progress: /validate fails
+    done --> archived: /archive
+    archived --> [*]
+```
 
 ## Agents
 
 | Agent | Role |
 |-------|------|
-| `web-researcher` | Researches external technologies, APIs, and best practices |
+| `web-researcher` | Researches external technologies, outputs to docs/research/ |
 | `code-explorer` | Traces feature implementations, maps architecture |
 | `code-architect` | Creates technical plans with decisive choices |
 | `task-generator` | Decomposes plans into trackable tasks |
 | `implement-agent` | Executes tasks respecting dependencies |
-| `code-reviewer` | Reviews code with confidence-based filtering |
+| `spec-validator` | Validates artifacts, consistency, and code quality |
+| `spec-archiver` | Generates documentation for completed features |
 
 ## Task Markers
 
@@ -96,36 +129,37 @@ spec-driven/
 
 ## Persistent Artifacts
 
-All artifacts are stored in `.specs/{branch}/`:
+### Working Files (.specs/ - gitignored)
 
 | File | Created By | Purpose |
 |------|------------|---------|
-| `spec.md` | /spec | Feature requirements and acceptance criteria |
-| `research.md` | /plan | External research findings (when applicable) |
-| `plan.md` | /plan | Technical architecture, critical files, and implementation map |
-| `tasks.md` | /tasks | Trackable task list with dependencies and artifact references |
+| `spec.md` | /init | Feature requirements and acceptance criteria |
+| `plan.md` | /plan | Technical architecture and implementation map |
+| `tasks.md` | /tasks | Trackable task list with dependencies |
+
+### Permanent Files (docs/ - committed)
+
+| File | Created By | Purpose |
+|------|------------|---------|
+| `docs/research/{topic}.md` | /plan | Reusable research findings |
+| `docs/features/{feature}.md` | /archive | Feature documentation with changelog |
 
 ## Context Flow
 
-Artifacts are passed between phases to ensure consistent context:
-
 ```
-/spec  --> spec.md
+/init  --> spec.md (with frontmatter)
 /plan  --> Reads: spec.md
-           Consolidates: Critical Files (Reference, Modify, Create)
-           Outputs: research.md, plan.md
+           Checks: docs/research/ for existing research
+           Outputs: docs/research/{topic}.md, plan.md
 /tasks --> Reads: plan.md
-           Outputs: tasks.md (with Artifacts section)
-/implement --> Reads: spec.md (AC), plan.md (Critical Files), research.md, tasks.md
-               Loads: Reference files for current tasks (max 5)
-/review --> Reads: spec.md (AC), plan.md (decisions)
-            Validates: Acceptance criteria status, architecture compliance
+           Outputs: tasks.md
+/implement --> Reads: spec.md (AC), plan.md (Critical Files), tasks.md
+               Loads: Reference files, docs/research/
+/validate --> Reads: spec.md, plan.md, tasks.md
+              Validates: Artifacts, consistency, code
+/archive --> Reads: spec.md, plan.md
+             Outputs: docs/features/{feature}.md
 ```
-
-Key context elements:
-- **Critical Files**: Reference patterns, files to modify/create (consolidated from explorers)
-- **Acceptance Criteria**: Validated during /implement and /review
-- **Research Findings**: Best practices passed to implement-agent
 
 ## Serena MCP Integration
 
@@ -147,3 +181,5 @@ Based on:
 - [ccspec](https://github.com/adeonir/ccspec) - Specification-driven development CLI
 - [feature-dev](https://github.com/anthropics/claude-code/tree/main/plugins/feature-dev) - Claude Code's feature development plugin
 - [Serena](https://github.com/oraios/serena) - Semantic code operations via LSP
+- [OpenSpec](https://github.com/Fission-AI/OpenSpec) - Delta-based specs
+- [spec-kit](https://github.com/github/spec-kit) - GitHub's SDD toolkit

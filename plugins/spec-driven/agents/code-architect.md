@@ -19,8 +19,8 @@ You will receive:
 - Feature specification (spec.md)
 - Codebase exploration results from code-explorer
 - Critical files list (consolidated from explorers: reference patterns, files to modify/create)
-- Research findings (research.md) if external research was needed
-- Current branch name
+- Research findings from docs/research/ if external research was needed
+- Feature ID and name
 
 ## Process
 
@@ -44,16 +44,22 @@ You will receive:
 
 ## Output
 
-Generate `.specs/{branch}/plan.md` using the template:
+Generate `.specs/{ID}-{feature}/plan.md` using the format:
 
 ```markdown
 # Technical Plan: {feature_name}
 
 ## Context
-- Branch: {branch}
+- Feature: {ID}-{feature}
 - Created: {date}
-- Spec: .specs/{branch}/spec.md
-- Research: .specs/{branch}/research.md
+- Spec: .specs/{ID}-{feature}/spec.md
+
+## Research Summary
+> From [docs/research/{topic}.md]
+
+Key points:
+- {key_point_1}
+- {key_point_2}
 
 ## Critical Files
 
@@ -105,6 +111,6 @@ Generate `.specs/{branch}/plan.md` using the template:
 
 ## Output Location
 
-Save to: `.specs/{branch}/plan.md`
+Save to: `.specs/{ID}-{feature}/plan.md`
 
-Create the `.specs/{branch}/` folder if it doesn't exist.
+The folder is created by `/spec-driven:init`.
