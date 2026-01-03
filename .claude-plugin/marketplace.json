@@ -22,9 +22,9 @@
     {
       "name": "design-builder",
       "source": "./plugins/design-builder",
-      "description": "Extract copy and design from references to build frontend components",
-      "version": "3.0.0",
-      "keywords": ["design", "frontend", "react", "variants", "html", "css"]
+      "description": "Extract copy and design from references to build React frontend or Figma designs",
+      "version": "4.0.0",
+      "keywords": ["design", "frontend", "react", "figma", "variants", "planning"]
     },
     {
       "name": "git-helpers",

@@ -1,4 +1,5 @@
 ---
+name: design
 description: Extract design tokens from reference images
 argument-hint: [image-url...]
 ---

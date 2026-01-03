@@ -1,23 +1,27 @@
 {
   "name": "design-builder",
-  "version": "3.0.0",
-  "description": "Extract copy and design from references to build frontend components",
+  "version": "4.0.0",
+  "description": "Extract copy and design from references to build React frontend or Figma designs",
   "author": {
     "name": "Adeonir Kohl"
   },
-  "repository": "https://github.com/adeonir/claude-code-plugins",
+  "repository": "https://github.com/adeonir/claude-code-extras",
   "license": "MIT",
-  "keywords": ["copy", "design", "frontend", "react", "variants"],
+  "keywords": ["copy", "design", "frontend", "react", "figma", "variants", "planning"],
   "commands": [
-    "./commands/extract-copy.md",
-    "./commands/extract-design.md",
-    "./commands/build-frontend.md"
+    "./commands/plan.md",
+    "./commands/copy.md",
+    "./commands/design.md",
+    "./commands/frontend.md",
+    "./commands/figma.md"
   ],
   "agents": [
+    "./agents/product-planner.md",
     "./agents/copy-extractor.md",
     "./agents/design-extractor.md",
     "./agents/frontend-builder.md",
-    "./agents/variants-builder.md"
+    "./agents/variants-builder.md",
+    "./agents/figma-builder.md"
   ],
   "skills": [
     "./skills/frontend-design/SKILL.md"

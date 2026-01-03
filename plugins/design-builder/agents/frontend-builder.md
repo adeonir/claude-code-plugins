@@ -19,13 +19,13 @@ Transform design.json (and optionally copy.yaml) into working React components t
 
 ### Mode 1: Direct Build (no variant reference)
 
-When called directly via `/build-frontend` (without --variants):
+When called directly via `/design-builder:frontend` (without --variants):
 
 1. Detect existing project or scaffold new
 2. Read design.json and copy.yaml
 3. Generate React components in ./src/
 
-### Mode 2: Build from Variant (after /build-frontend --variants)
+### Mode 2: Build from Variant (after /design-builder:frontend --variants)
 
 When user says "use editorial" (or another variant name):
 

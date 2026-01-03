@@ -26,11 +26,10 @@ plugins/
 │   ├── commands/             # Slash commands (/debug)
 │   └── skills/               # Auto-loaded skills (debugging)
 │
-├── design-builder/           # Frontend generation plugin
+├── design-builder/           # Frontend/Figma generation plugin
 │   ├── .claude-plugin/plugin.json
-│   ├── agents/               # Subagents (copy-extractor, design-extractor, variants-builder, etc.)
-│   ├── commands/             # Slash commands (/extract-copy, /extract-design, /build-frontend, etc.)
-│   ├── templates/            # HTML templates (preview.html)
+│   ├── agents/               # Subagents (product-planner, copy-extractor, design-extractor, figma-builder, etc.)
+│   ├── commands/             # Slash commands (/plan, /copy, /design, /frontend, /figma)
 │   └── skills/               # Auto-loaded skills (frontend-design)
 │
 └── git-helpers/              # Git workflow plugin
@@ -65,15 +64,17 @@ Iterative debugging workflow: `/debug-tools:debug "bug description"`
 Uses Console Ninja MCP for runtime values and Chrome DevTools MCP for browser inspection.
 
 ### design-builder
-Two entry points:
-- **Full**: URL -> `/extract-copy` -> `copy.yaml` -> `/extract-design` -> `design.json`
-- **Minimal**: Image -> `/extract-design` -> `design.json` (with brief project description)
+Multiple entry points:
+- **From scratch**: `/design-builder:plan` -> `product-plan.yaml` -> `/design-builder:design` -> `design.json`
+- **URL reference**: `/design-builder:copy` -> `copy.yaml` -> `/design-builder:design` -> `design.json`
+- **Image reference**: `/design-builder:design` -> `design.json` (with brief description)
 
-Then build:
-- `/build-frontend` - React directly
-- `/build-frontend --variants` - 4 HTML previews -> choose -> React
+Multiple outputs:
+- `/design-builder:frontend` - React directly
+- `/design-builder:frontend --variants` - 4 HTML previews -> choose -> React
+- `/design-builder:figma` - HTML for Figma import via YashiTech plugin (40/week free)
 
-**Design Variants**: Generate 4 layout presets (minimal, editorial, startup, bold) as HTML+CSS previews. Compare at http://localhost:8080, then tell Claude which to use (e.g., "use editorial") and it builds the React app.
+**Design Variants**: Generate 4 layout presets (minimal, editorial, startup, bold) as HTML+CSS previews. Compare at http://localhost:8080, then tell Claude which to use (e.g., "use editorial").
 
 ### git-helpers
 Workflow: `/git-helpers:code-review` -> `/git-helpers:commit` -> `/git-helpers:details` -> `/git-helpers:push-pr`

@@ -1,4 +1,5 @@
 ---
+name: frontend
 description: Build frontend components from design tokens
 argument-hint: [--variants]
 ---
@@ -45,5 +46,5 @@ Wait for the agent to complete and inform the user of the result.
 
 ## Error Handling
 
-- **No design.json found**: Run /extract-design first to extract design tokens
+- **No design.json found**: Run /design-builder:design first to extract design tokens
 - **Scaffold failed**: Check package manager is installed and available

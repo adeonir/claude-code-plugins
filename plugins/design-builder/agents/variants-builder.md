@@ -304,7 +304,7 @@ Inform user: "Open http://localhost:8080 to compare variants. Tell me which one 
 4. **Preserve tokens**: All variants use the same design.json (colors, fonts, spacing base)
 5. **Identical copy**: Same textual content across all variants
 6. **Descriptive comment**: Each file starts with variant identifier
-7. **Validation**: If design.json doesn't exist, instruct to run /extract-design first
+7. **Validation**: If design.json doesn't exist, instruct to run /design-builder:design first
 
 ## Final Checklist
 

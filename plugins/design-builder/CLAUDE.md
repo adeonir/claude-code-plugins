@@ -1,6 +1,6 @@
 # Design Builder
 
-Claude Code plugin that extracts copy and design from references to build frontend components.
+Claude Code plugin that extracts copy and design from references to build frontend or Figma designs.
 
 ## Architecture
 
@@ -9,79 +9,84 @@ design-builder/
 ├── .claude-plugin/
 │   └── plugin.json                 # Plugin manifest
 ├── agents/                         # Specialized subagents
+│   ├── product-planner.md          # Product Strategist
 │   ├── copy-extractor.md           # Content Strategist
 │   ├── design-extractor.md         # Creative Director
 │   ├── frontend-builder.md         # Frontend Engineer (React)
-│   └── variants-builder.md         # Variants Engineer (HTML+CSS)
+│   ├── variants-builder.md         # Design Engineer (HTML+CSS)
+│   └── figma-builder.md            # Design Engineer (Figma)
 ├── commands/                       # Slash commands
-│   ├── extract-copy.md
-│   ├── extract-design.md
-│   └── build-frontend.md
+│   ├── plan.md
+│   ├── copy.md
+│   ├── design.md
+│   ├── frontend.md
+│   └── figma.md
 ├── skills/                         # Auto-loaded guidance
 │   └── frontend-design/SKILL.md
 └── docs/                           # Output directory
+    ├── product-plan.yaml
     ├── copy.yaml
     └── design.json
 ```
 
 ## Workflows
 
-Two entry points:
+```mermaid
+flowchart TD
+    subgraph Entry Points
+        A[From Scratch] -->|/plan| B[product-plan.yaml]
+        C[URL Reference] -->|/copy| D[copy.yaml]
+        E[Image Reference] -->|/design| F[design.json]
+    end
 
+    B --> F
+    D --> F
+
+    subgraph Outputs
+        F -->|/frontend| G[React App]
+        F -->|/frontend --variants| H[4 HTML Previews]
+        F -->|/figma| I[Figma Design]
+        H --> G
+        H --> I
+    end
 ```
-# Full: Start from URL reference
-URL -> /extract-copy -> copy.yaml -> /extract-design -> design.json
 
-# Minimal: Start from design image only (with brief project description)
-Image -> /extract-design -> design.json
+### Entry Points
 
-# Then build:
--> /build-frontend              # React direto
--> /build-frontend --variants   # 4 previews HTML -> escolha -> React
-```
+| Entry | Command | When to Use |
+|-------|---------|-------------|
+| From scratch | `/design-builder:plan` | No reference, just an idea |
+| URL | `/design-builder:copy` | Website as inspiration |
+| Image | `/design-builder:design` | Screenshot/mockup as reference |
 
-### Design Variants
+### Outputs
 
-Generate 4 HTML+CSS previews to compare before building React:
-
-```
-/build-frontend --variants
-    |
-    v
-Generates ./outputs/
-  minimal/index.html    # Text hero, extra whitespace, no cards
-  editorial/index.html  # Split hero, generous spacing, flat cards
-  startup/index.html    # Centered hero, balanced, shadow cards
-  bold/index.html       # Fullscreen hero, compact, bordered cards
-  index.html            # Side-by-side comparison
-    |
-    v
-npx http-server ./outputs -o -p 8080
-    |
-    v
-User: "use editorial"
-    |
-    v
-frontend-builder creates React based on editorial layout
-```
+| Output | Command | For Who |
+|--------|---------|---------|
+| React | `/design-builder:frontend` | Dev wants code directly |
+| Figma | `/design-builder:figma` | Designer wants to refine first |
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/extract-copy` | Extract content from URL to copy.yaml (optional) |
-| `/extract-design` | Extract design from images to design.json |
-| `/build-frontend` | Build React directly |
-| `/build-frontend --variants` | Generate 4 HTML previews, then build React from chosen variant |
+| `/design-builder:plan` | Define product vision, data models, features |
+| `/design-builder:copy` | Extract content from URL to copy.yaml |
+| `/design-builder:design` | Extract design from images to design.json |
+| `/design-builder:frontend` | Build React directly |
+| `/design-builder:frontend --variants` | Generate 4 HTML previews, then build React |
+| `/design-builder:figma` | Generate HTML for Figma import |
 
 ## Agents
 
 | Agent | Role |
 |-------|------|
-| `copy-extractor` | Content Strategist |
-| `design-extractor` | Creative Director |
-| `frontend-builder` | Frontend Engineer - builds React (from variant or direct) |
-| `variants-builder` | Variants Engineer - generates 4 HTML+CSS previews |
+| `product-planner` | Product Strategist - defines vision from scratch |
+| `copy-extractor` | Content Strategist - extracts content from URLs |
+| `design-extractor` | Creative Director - extracts design from images |
+| `frontend-builder` | Frontend Engineer - builds React |
+| `variants-builder` | Design Engineer - generates 4 HTML+CSS previews |
+| `figma-builder` | Design Engineer - generates Figma-optimized HTML |
 
 Agents can be invoked directly: "Use the design-extractor agent to analyze this image"
 
@@ -96,11 +101,23 @@ Each preset applies design guidelines (60-30-10, visual hierarchy, rhythm):
 | `startup` | SaaS modern | Centered CTA | Balanced | Shadows |
 | `bold` | High impact | Fullscreen | Compact | Bordered |
 
+## Figma Export
+
+Export to Figma using YashiTech plugin (40 imports/week free):
+
+1. `/design-builder:figma` generates HTML at localhost:8081
+2. Use Chrome Extension to capture
+3. Import in Figma via plugin
+
+**Requirements:**
+- [Chrome Extension](https://chromewebstore.google.com/detail/html-to-figma-by-yashi-te/apgdhlibcimkkffajannbmpnbjaealmo)
+- [Figma Plugin](https://www.figma.com/community/plugin/1459487250118622106)
+
 ## Skills
 
 | Skill | Description |
 |-------|-------------|
-| `frontend-design` | Design principles auto-loaded for frontend tasks (avoids AI slop aesthetics) |
+| `frontend-design` | Design principles auto-loaded for frontend tasks |
 
 The frontend-builder and variants-builder agents MUST apply the frontend-design skill.
 
@@ -114,6 +131,13 @@ The frontend-builder and variants-builder agents MUST apply the frontend-design 
 | `app` | Mobile application | iOS/Android, PWA |
 
 ## Output Formats
+
+### product-plan.yaml
+- Project metadata and description
+- Target audience and pain points
+- Value proposition and features
+- Structure (sections for landing, screens for webapp)
+- Style direction and references
 
 ### copy.yaml
 - `landing/website`: sections with hero, features, cta, footer

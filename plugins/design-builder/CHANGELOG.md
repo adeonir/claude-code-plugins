@@ -2,6 +2,24 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v4.0.0 (2026-01-03)
+
+### Added
+- `/design-builder:plan` command for product planning from scratch
+- `/design-builder:figma` command for Figma export via YashiTech plugin
+- `product-planner` agent for defining vision, data models, features
+- `figma-builder` agent for generating Figma-optimized HTML
+- Multiple entry points: from scratch, URL reference, or image reference
+- Multiple outputs: React code or Figma design
+
+### Changed
+- Command prefixes added (`/design-builder:*`) for consistency
+- Shorter command names: `copy`, `design`, `frontend`, `plan`, `figma`
+- Repository URL updated to claude-code-extras
+
+### Fixed
+- URL references updated from claude-code-plugins to claude-code-extras
+
 ## v3.0.0 (2025-12-22)
 
 ### Added
