@@ -2,6 +2,13 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v2.3.0 (2026-01-05)
+
+### Changed
+- `/archive` now generates centralized changelog at `docs/CHANGELOG.md`
+- Feature docs (`docs/features/*.md`) no longer include changelog section
+- Changelog uses Keep a Changelog format (Added/Changed/Removed/Fixed/Deprecated/Security)
+
 ## v2.2.0 (2026-01-05)
 
 ### Added

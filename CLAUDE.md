@@ -54,7 +54,7 @@ Specification-driven development workflow:
 
 Features organized by sequential ID (`001-user-auth/`, `002-add-2fa/`) with optional branch association. The `/plan` command discovers project documentation, generates Requirements Traceability (FR-xxx mapped to components). The `/tasks` command receives spec.md and generates Requirements Coverage (every FR-xxx has tasks). Task categories: Foundation, Implementation, Validation, Documentation.
 
-Artifacts persisted in `.specs/{ID}-{feature}/` (spec.md, plan.md, tasks.md). Research shared in `docs/research/`. Documentation generated to `docs/features/` via `/archive`.
+Artifacts persisted in `.specs/{ID}-{feature}/` (spec.md, plan.md, tasks.md). Research shared in `docs/research/`. Feature docs generated to `docs/features/`, changelog to `docs/CHANGELOG.md` via `/archive`.
 
 ### debug-tools
 Iterative debugging workflow: `/debug-tools:debug "bug description"`

@@ -47,42 +47,65 @@ Read from `.specs/{ID}-{feature}/`:
 Determine target path from feature name (e.g., `add-2fa` -> `docs/features/auth.md` or new file).
 
 If `docs/features/{relevant}.md` exists:
-- Will append changelog entry to existing file
+- Will update that file with new content
 
 If not:
 - Will create new file
 
-### Step 5: Generate Documentation
+### Step 5: Generate Feature Documentation
 
-Create/update `docs/features/{feature}.md`:
+Create/update `docs/features/{feature}.md` (NO changelog section - just permanent docs):
 
 ```markdown
 # {Feature Title}
 
 ## Overview
+
 {from spec.md Overview section}
 
 ## Architecture Decisions
+
 {from plan.md Architecture Decision section}
-
-## Changelog
-
-### {YYYY-MM-DD}
-- {Summary of changes from this feature}
-- {Key additions, modifications, removals}
 ```
 
-If file exists, only add new changelog entry at top of Changelog section.
+### Step 6: Update Centralized Changelog
 
-### Step 6: Update Status
+Update `docs/CHANGELOG.md` (create if not exists):
+
+```markdown
+# Changelog
+
+## {YYYY-MM-DD}
+
+### Added
+- {New capabilities from this feature}
+
+### Changed
+- {Modified behaviors}
+
+### Removed
+- {Deprecated/removed items}
+
+## {previous date}
+...
+```
+
+Rules for changelog:
+- Add new date section at TOP of file (after # Changelog header)
+- Use Keep a Changelog format (Added/Changed/Removed/Fixed/Deprecated/Security)
+- Only include sections that have entries
+- Each entry describes user-visible change, not implementation detail
+
+### Step 7: Update Status
 
 Update `.specs/{ID}-{feature}/spec.md` frontmatter:
 - Set `status: archived`
 
-### Step 7: Report
+### Step 8: Report
 
 Inform user:
 - Documentation generated/updated at `docs/features/{file}.md`
+- Changelog entry added to `docs/CHANGELOG.md`
 - Feature marked as archived
 - User can delete `.specs/{ID}-{feature}/` manually if desired
 

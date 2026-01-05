@@ -151,7 +151,8 @@ stateDiagram-v2
 | File | Created By | Purpose |
 |------|------------|---------|
 | `docs/research/{topic}.md` | /plan | Reusable research findings |
-| `docs/features/{feature}.md` | /archive | Feature documentation with changelog |
+| `docs/features/{feature}.md` | /archive | Feature overview and architecture decisions |
+| `docs/CHANGELOG.md` | /archive | Centralized project changelog |
 
 ## Context Flow
 
@@ -168,7 +169,7 @@ stateDiagram-v2
 /validate --> Reads: spec.md, plan.md, tasks.md
               Validates: Artifacts, consistency, code, planning completeness
 /archive --> Reads: spec.md, plan.md
-             Outputs: docs/features/{feature}.md
+             Outputs: docs/features/{feature}.md, docs/CHANGELOG.md
 ```
 
 ## Serena MCP Integration
