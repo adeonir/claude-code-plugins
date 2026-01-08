@@ -2,6 +2,14 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v1.2.1 (2026-01-07)
+
+### Changed
+- `/commit`: never use scope in commit type (`feat:` not `feat(scope):`)
+- `/commit`: never add Co-Authored-By or similar attribution lines
+- `/push-pr`: allow scope in PR title (`feat:` or `feat(scope):` both valid)
+- `/push-pr`: never add Co-Authored-By or similar attribution lines
+
 ## v1.2.0 (2026-01-03)
 
 ### Added

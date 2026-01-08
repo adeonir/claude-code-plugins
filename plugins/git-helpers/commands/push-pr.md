@@ -77,6 +77,8 @@ Brief summary of what this PR does (2-3 sentences max).
 - Use imperative mood: "add", "fix", "implement"
 - Keep changes list to 3-5 key items
 - Do not include risk assessment, testing instructions, or technical flow sections
+- **Scope in title is allowed** - both `feat:` and `feat(scope):` are valid
+- **NEVER add Co-Authored-By, Authored-By, or similar attribution lines**
 
 ## Task
 

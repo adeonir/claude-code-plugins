@@ -1,6 +1,6 @@
 {
   "name": "git-helpers",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Git workflow commands with confidence-scored code review",
   "author": {
     "name": "Adeonir Kohl"
