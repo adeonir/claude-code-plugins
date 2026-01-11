@@ -2,6 +2,12 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v1.3.1 (2026-01-11)
+
+### Added
+- YAML frontmatter to debugging skill with name and description
+- `context: fork` to debugging skill for conversation context access
+
 ## v1.3.0 (2026-01-03)
 
 ### Added

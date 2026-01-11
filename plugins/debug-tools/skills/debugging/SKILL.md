@@ -1,3 +1,9 @@
+---
+name: debugging
+description: Guide for debugging with targeted log injection and runtime analysis
+context: fork
+---
+
 # Debugging Skill
 
 Guide for debugging with targeted log injection and runtime analysis.

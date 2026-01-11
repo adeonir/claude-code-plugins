@@ -2,6 +2,11 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v4.0.1 (2026-01-11)
+
+### Added
+- `context: fork` to frontend-design skill for conversation context access
+
 ## v4.0.0 (2026-01-03)
 
 ### Added

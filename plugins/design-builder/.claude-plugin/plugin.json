@@ -1,6 +1,6 @@
 {
   "name": "design-builder",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Extract copy and design from references to build React frontend or Figma designs",
   "author": {
     "name": "Adeonir Kohl"

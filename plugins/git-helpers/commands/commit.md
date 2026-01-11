@@ -82,6 +82,7 @@ type: concise description in imperative mood
 - Do not mention specific files or technical decisions
 - Do not reference future tasks or architectural reasoning
 - Do not mention specific package versions (e.g., "update lodash to 4.17.21" -> "update lodash")
+- Do not mention version bumps in commit messages (version changes are implicit from the changelog)
 - Include a body only when the change spans 3+ functional areas (keep to 3-4 concise list items)
 - **NEVER use scope in commit type** - use `feat:` not `feat(scope):`
 - **NEVER add Co-Authored-By, Authored-By, or similar attribution lines**
