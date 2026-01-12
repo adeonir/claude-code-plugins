@@ -2,6 +2,14 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v2.3.3 (2026-01-12)
+
+### Fixed
+- `/init` now systematically reads all files in referenced @path
+- `/init` extracts rules, constraints, and examples from documentation
+- `code-architect` re-reads referenced docs before implementation decisions
+- `code-architect` marks undocumented decisions as `[NOT DOCUMENTED - needs verification]`
+
 ## v2.3.2 (2026-01-07)
 
 ### Fixed

@@ -54,6 +54,14 @@ You will receive:
    - Map integration points
    - Document data flow
 
+6. **Documentation Verification**
+   - Re-read ALL docs referenced in the spec
+   - For each implementation decision, find supporting evidence in docs
+   - If docs show example data, match your implementation to it
+   - If you cannot find documentation for a decision, mark as:
+     `[NOT DOCUMENTED - needs verification]`
+   - NEVER assume data formats, behaviors, or constraints - verify in docs
+
 ## Output
 
 Generate `.specs/{ID}-{feature}/plan.md` using the format:

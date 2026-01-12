@@ -45,13 +45,37 @@ If input is text:
 If input is empty:
 - Ask the user for a feature description
 
-### Step 4: Generate Feature Name
+### Step 4: Process Referenced Documentation
+
+When documentation is referenced with @path:
+
+1. **List all files** in the referenced path
+2. **Read each file completely**
+3. **Extract** from each file:
+   - Rules (words: "must", "cannot", "always", "never", "required")
+   - Constraints (words: "only if", "when", "unless")
+   - Examples (code blocks, diagrams, sample data)
+4. **For each item found**, ask: "Is this relevant to the feature?"
+5. **If relevant**, it MUST become an FR or AC in the spec
+6. **If skipped**, note WHY in the Notes section
+
+Output before generating spec:
+
+```markdown
+## Extracted from Documentation
+
+| Source | Item | Relevant | Mapped To |
+|--------|------|----------|-----------|
+| {file} | {rule/constraint} | Yes/No | FR-xxx / AC-xxx / Skipped: {reason} |
+```
+
+### Step 5: Generate Feature Name
 
 From the description, derive a short kebab-case name:
 - "Add two-factor authentication" -> `add-2fa`
 - "User registration flow" -> `user-registration`
 
-### Step 5: Check Branch Association
+### Step 6: Check Branch Association
 
 Get current git branch:
 ```bash
@@ -63,7 +87,7 @@ Ask user:
 
 If on main/master, suggest creating a new branch.
 
-### Step 6: Generate Specification
+### Step 7: Generate Specification
 
 Create `.specs/{ID}-{feature}/spec.md` with frontmatter and content:
 
@@ -103,14 +127,14 @@ created: {YYYY-MM-DD}
 <!-- Items marked [NEEDS CLARIFICATION] require resolution before plan -->
 ```
 
-### Step 7: Mark Ambiguities
+### Step 8: Mark Ambiguities
 
 For any unclear or underspecified items, add:
 ```
 [NEEDS CLARIFICATION: specific question]
 ```
 
-### Step 8: Report
+### Step 9: Report
 
 Inform the user:
 - Feature created: `{ID}-{feature}`
