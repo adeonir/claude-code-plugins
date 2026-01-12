@@ -1,6 +1,6 @@
 {
   "name": "spec-driven",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "description": "Specification-driven development workflow with persistent artifacts for planning, task management, and implementation",
   "author": {
     "name": "Adeonir Kohl"
@@ -22,6 +22,7 @@
     "./agents/web-researcher.md",
     "./agents/code-explorer.md",
     "./agents/code-architect.md",
+    "./agents/plan-validator.md",
     "./agents/task-generator.md",
     "./agents/implement-agent.md",
     "./agents/spec-validator.md",

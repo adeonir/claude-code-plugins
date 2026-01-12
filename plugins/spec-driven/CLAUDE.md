@@ -13,6 +13,7 @@ spec-driven/
 │   ├── web-researcher.md
 │   ├── code-explorer.md
 │   ├── code-architect.md
+│   ├── plan-validator.md
 │   ├── task-generator.md
 │   ├── implement-agent.md
 │   ├── spec-validator.md
@@ -112,6 +113,7 @@ stateDiagram-v2
 | `web-researcher` | Researches external technologies, outputs to docs/research/ |
 | `code-explorer` | Discovers project documentation, traces feature implementations, maps architecture |
 | `code-architect` | Reviews documentation context, creates technical plans with Requirements Traceability |
+| `plan-validator` | Validates plan.md against project documentation, detects inconsistencies |
 | `task-generator` | Decomposes plans into trackable tasks with Requirements Coverage |
 | `implement-agent` | Executes tasks respecting dependencies |
 | `spec-validator` | Validates artifacts, consistency, code quality, and planning completeness |
@@ -162,6 +164,7 @@ stateDiagram-v2
            Discovers: READMEs, diagrams, architecture docs
            Checks: docs/research/ for existing research
            Outputs: docs/research/{topic}.md, plan.md (with Requirements Traceability)
+           Validates: plan.md against project documentation (auto-corrects if inconsistencies found)
 /tasks --> Reads: spec.md (FR-xxx, AC-xxx), plan.md
            Outputs: tasks.md (with Requirements Coverage)
 /implement --> Reads: spec.md (AC), plan.md (Critical Files), tasks.md

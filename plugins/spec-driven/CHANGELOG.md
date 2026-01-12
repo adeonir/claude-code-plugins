@@ -2,6 +2,17 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v2.4.0 (2026-01-12)
+
+### Added
+- `plan-validator` agent to validate plan.md against project documentation
+- Plan validation step in `/plan` command (Step 8)
+- Auto-correction loop: re-generates plan until documentation consistency achieved (max 3 iterations)
+- User prompt when max iterations reached with remaining inconsistencies
+
+### Changed
+- `/plan` command now has 10 steps (was 9)
+
 ## v2.3.3 (2026-01-12)
 
 ### Fixed
