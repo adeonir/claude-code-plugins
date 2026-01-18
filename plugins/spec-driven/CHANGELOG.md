@@ -2,6 +2,18 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## v2.5.1 (2026-01-18)
+
+### Added
+- Project Conventions Discovery step in `explorer` agent
+  - Identifies wrapper libraries/abstractions the project uses
+  - Documents patterns that MUST be followed (with reference files)
+  - Documents what to avoid (e.g., direct access when abstraction exists)
+- "Project conventions" as mandatory output item in explorer analysis
+
+### Changed
+- Rule 4 in explorer now emphasizes explicit documentation of conventions
+
 ## v2.5.0 (2026-01-12)
 
 ### Added

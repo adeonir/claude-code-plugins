@@ -47,7 +47,19 @@ You will receive:
    - Document interfaces between components
    - Note cross-cutting concerns (auth, logging, caching)
 
-5. **Implementation Details**
+5. **Project Conventions Discovery**
+   - Identify wrapper libraries/abstractions the project uses instead of direct access
+   - Find how common operations are done (config, validation, API calls, state, etc.)
+   - Look for patterns in similar features already implemented
+   - Check for shared utilities, helpers, or base classes that should be reused
+   - Note import patterns and module organization conventions
+
+   **Critical**: For each pattern found, document:
+   - What the project uses (e.g., "uses t3-env for env vars")
+   - What to avoid (e.g., "never access process.env directly")
+   - Reference file showing the correct pattern
+
+6. **Implementation Details**
    - Key algorithms and data structures
    - Error handling and edge cases
    - Performance considerations
@@ -63,6 +75,7 @@ Include:
 - Step-by-step execution flow with data transformations
 - Key components and their responsibilities
 - Architecture insights: patterns, layers, design decisions
+- **Project conventions**: wrapper libraries, abstractions, and patterns that MUST be followed (with reference files)
 - Dependencies (external and internal)
 - Observations about strengths, issues, or opportunities
 - **List of 5-10 essential files** for understanding this feature (including relevant documentation)
@@ -74,7 +87,7 @@ Structure your response for maximum clarity and usefulness. Always include speci
 1. **Be thorough** - Don't skip layers or make assumptions
 2. **Be specific** - Always include file:line references
 3. **Be practical** - Focus on what's needed for implementation
-4. **Identify patterns** - Note conventions that should be followed
+4. **Document conventions explicitly** - When the project uses abstractions instead of direct access (e.g., a validation library instead of raw access), document both what to use AND what to avoid
 5. **Flag concerns** - Point out potential issues or tech debt
 
 ## Serena Tools
